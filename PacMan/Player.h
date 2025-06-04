@@ -36,6 +36,10 @@ private:
     Sprite * spriteD = nullptr;         // sprite do player indo para baixo
     float velX = 0;                     // velocidade horizontal do player
     float velY = 0;                     // velocidade vertical do player
+    float speed = 0;
+    float playerSize = 0;
+    boolean movedVertical[2];
+    boolean movedHorizontal[2];
 
 public:
     uint currState = STOPED;            // estado atual do jogador
@@ -55,6 +59,7 @@ public:
     
     void Update();                      // atualização do objeto
     void Draw();                        // desenho do objeto
+
 };
 
 // ---------------------------------------------------------------------------------

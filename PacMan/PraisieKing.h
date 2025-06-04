@@ -20,7 +20,9 @@ enum PacManObjects
     GHOST,
     FOOD,
     SPECIAL,
-    PIVOT
+    PIVOT,
+    BARRIER,
+    ENEMY,
 };
 
 // ------------------------------------------------------------------------------

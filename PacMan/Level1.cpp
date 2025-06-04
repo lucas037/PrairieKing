@@ -15,6 +15,7 @@
 #include "Level2.h"
 #include "Player.h"
 #include "Pivot.h"
+#include "Enemy.h"
 #include <string>
 #include <fstream>
 using std::ifstream;
@@ -28,11 +29,14 @@ void Level1::Init()
     scene = new Scene();
 
     // cria background
-    backg = new Sprite("Resources/Level1.jpg");
+    backg = new Sprite("Resources/bg_level1.jpg");
 
     // cria jogador
     Player * player = new Player();
     scene->Add(player, MOVING);
+
+    Enemy* enemy = new Enemy();
+    scene->Add(enemy, STATIC);
 
     // cria pontos de mudança de direção
     Pivot * pivot;
