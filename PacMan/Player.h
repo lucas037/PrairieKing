@@ -23,36 +23,29 @@
 // Constantes Globais
 
 // estados possíveis para o jogador
-enum PLAYERSTATE {STOPED, UP, DOWN, LEFT, RIGHT};    
+enum PLAYERSTATE { STOPED, UP, DOWN };
+enum SHOOTDIRECTION { NO_DIRECTION, SHOOT_UP, SHOOT_DOWN, SHOOT_LEFT, SHOOT_RIGHT, SHOOT_UPLEFT, SHOOT_UPRIGHT, SHOOT_DOWNLEFT, SHOOT_DOWNRIGHT };
 
 // ---------------------------------------------------------------------------------
 
 class Player : public Object
 {
 private:
-    Sprite * spriteL = nullptr;         // sprite do player indo para esquerda
-    Sprite * spriteR = nullptr;         // sprite do player indo para direita
-    Sprite * spriteU = nullptr;         // sprite do player indo para cima
+    Sprite* spriteU = nullptr;         // sprite do player indo para ci'm'a
     Sprite * spriteD = nullptr;         // sprite do player indo para baixo
     float velX = 0;                     // velocidade horizontal do player
     float velY = 0;                     // velocidade vertical do player
     float speed = 0;
     float playerSize = 0;
-    boolean movedVertical[2];
-    boolean movedHorizontal[2];
 
 public:
     uint currState = STOPED;            // estado atual do jogador
-    uint nextState = STOPED;            // próximo estado do jogador
+    uint shootingDirection = SHOOT_DOWN;
 
     Player();                           // construtor
     ~Player();                          // destrutor
 
     void Stop();                        // pára jogador
-    void Up();                          // muda direção para cima
-    void Down();                        // muda direção para baixo
-    void Left();                        // muda direção para esquerda
-    void Right();                       // muda direção para direita
 
     void OnCollision(Object * obj);     // resolução da colisão
     void PivotCollision(Object * obj);  // revolve colisão com pivô

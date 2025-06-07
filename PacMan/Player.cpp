@@ -28,6 +28,8 @@ Player::Player()
     BBox(new Rect((-playerSize / 2), (-playerSize / 2), (playerSize / 2), (playerSize / 2)));
     MoveTo(window->CenterX() + (playerSize / 2), window->CenterY() + (playerSize / 2)); // inicialmente o jogador fica no meio
     type = PLAYER;
+    currState = DOWN;
+    shootingDirection = DOWN;
 }
 
 // ---------------------------------------------------------------------------------
@@ -63,30 +65,48 @@ void Player::PivotCollision(Object * obj)
 
 void Player::Update()
 {
-    boolean moved = false;
+    // MOVIMENTAÇÃO
+    uint newShootDirection = NO_DIRECTION;
 
     if (window->KeyDown(VK_LEFT) || window->KeyDown('A'))
     {
         Translate(-speed * gameTime, 0);
+        newShootDirection = SHOOT_LEFT;
     }
     
     if (window->KeyDown(VK_RIGHT) || window->KeyDown('D'))
     {
         Translate(speed * gameTime, 0);
+        newShootDirection = SHOOT_RIGHT;
     }
     
     if (window->KeyDown(VK_UP) || window->KeyDown('W'))
     {
         currState = UP;
         Translate(0, -speed * gameTime);
+
+        if (newShootDirection == SHOOT_LEFT)
+            newShootDirection = SHOOT_UPLEFT;
+        else if (newShootDirection == SHOOT_RIGHT)
+            newShootDirection = SHOOT_UPRIGHT;
+        else
+            newShootDirection = SHOOT_UP;
     }
     
     if (window->KeyDown(VK_DOWN) || window->KeyDown('S'))
     {
         currState = DOWN;
         Translate(0, speed * gameTime);
+
+        if (newShootDirection == SHOOT_LEFT)
+            newShootDirection = SHOOT_DOWNLEFT;
+        else if (newShootDirection == SHOOT_RIGHT)
+            newShootDirection = SHOOT_DOWNRIGHT;
+        else
+            newShootDirection = SHOOT_DOWN;
     }
 
+    // MANTER-SE DENTRO DA TELA DO JOGO
     if (x + (playerSize / 2) < window->CenterX() - 365.0f) {
         Translate(speed * gameTime, 0.0f);
     }
@@ -99,6 +119,18 @@ void Player::Update()
     else if (y + (playerSize / 2) > window->CenterY() + playerSize + 365.0f + 5.0f) {
         Translate(0.0f, -speed * gameTime);
     }
+
+    // ATIRAR
+    if (newShootDirection != NO_DIRECTION && shootingDirection != newShootDirection) {
+        shootingDirection = newShootDirection;
+    }
+
+    // aqui seria implementada a lógica de atirar. a direção já está indicada com a variável shootingDirection: 
+    // SHOOTDIRECTION { NO_DIRECTION, SHOOT_UP, SHOOT_DOWN, SHOOT_LEFT, SHOOT_RIGHT, SHOOT_UPLEFT, SHOOT_UPRIGHT, SHOOT_DOWNLEFT, SHOOT_DOWNRIGHT };
+    if (window->KeyPress(VK_SPACE)) { 
+        shootingDirection;
+        exit(0);
+    }
 }
 
 // ---------------------------------------------------------------------------------
@@ -107,15 +139,9 @@ void Player::Draw()
 { 
     switch(currState)
     {
-    case UP:    spriteU->Draw(x, y, Layer::UPPER); break;
-    case DOWN:  spriteD->Draw(x, y, Layer::UPPER); break;
-    default: 
-        switch(nextState)
-        {
         case UP:    spriteU->Draw(x, y, Layer::UPPER); break;
         case DOWN:  spriteD->Draw(x, y, Layer::UPPER); break;
-        default:    spriteD->Draw(x, y, Layer::UPPER);
-        }
+        default:  spriteD->Draw(x, y, Layer::UPPER); break;
     }
 }
 
