@@ -17,8 +17,6 @@
 
 Player::Player()
 {
-    spriteL = new Sprite("Resources/PlayerL.png");
-    spriteR = new Sprite("Resources/PlayerR.png");
     spriteU = new Sprite("Resources/PlayerU.png");
     spriteD = new Sprite("Resources/PlayerD.png");
 
@@ -36,8 +34,6 @@ Player::Player()
 
 Player::~Player()
 {
-    delete spriteL;
-    delete spriteR;
     delete spriteU;
     delete spriteD;
 }
@@ -52,42 +48,8 @@ void Player::Stop()
 
 // ---------------------------------------------------------------------------------
 
-void Player::Up()
-{
-    currState = UP;
-    Translate(0, - speed * gameTime);
-}
-
-// ---------------------------------------------------------------------------------
-
-void Player::Down()
-{
-    currState = DOWN;
-    Translate(0, speed * gameTime);
-}
-
-// ---------------------------------------------------------------------------------
-
-void Player::Left()
-{
-    currState = LEFT;
-    Translate(-speed * gameTime, 0);
-}
-
-// ---------------------------------------------------------------------------------
-
-void Player::Right()
-{
-    currState = RIGHT;
-    Translate(speed * gameTime, 0);
-}
-
-// ---------------------------------------------------------------------------------
-
 void Player::OnCollision(Object * obj)
 {
-    if (obj->Type() == PIVOT)
-        PivotCollision(obj);
 
 }
 
@@ -105,23 +67,24 @@ void Player::Update()
 
     if (window->KeyDown(VK_LEFT) || window->KeyDown('A'))
     {
-        Left();
-        moved = true;
+        Translate(-speed * gameTime, 0);
     }
     
     if (window->KeyDown(VK_RIGHT) || window->KeyDown('D'))
     {
-        Right();
+        Translate(speed * gameTime, 0);
     }
     
     if (window->KeyDown(VK_UP) || window->KeyDown('W'))
     {
-        Up();
+        currState = UP;
+        Translate(0, -speed * gameTime);
     }
     
     if (window->KeyDown(VK_DOWN) || window->KeyDown('S'))
     {
-        Down();
+        currState = DOWN;
+        Translate(0, speed * gameTime);
     }
 
     if (x + (playerSize / 2) < window->CenterX() - 365.0f) {
@@ -144,18 +107,14 @@ void Player::Draw()
 { 
     switch(currState)
     {
-    case LEFT:  spriteL->Draw(x, y, Layer::UPPER); break;
-    case RIGHT: spriteR->Draw(x, y, Layer::UPPER); break;
     case UP:    spriteU->Draw(x, y, Layer::UPPER); break;
     case DOWN:  spriteD->Draw(x, y, Layer::UPPER); break;
     default: 
         switch(nextState)
         {
-        case LEFT:  spriteL->Draw(x, y, Layer::UPPER); break;
-        case RIGHT: spriteR->Draw(x, y, Layer::UPPER); break;
         case UP:    spriteU->Draw(x, y, Layer::UPPER); break;
         case DOWN:  spriteD->Draw(x, y, Layer::UPPER); break;
-        default:    spriteL->Draw(x, y, Layer::UPPER);
+        default:    spriteD->Draw(x, y, Layer::UPPER);
         }
     }
 }
