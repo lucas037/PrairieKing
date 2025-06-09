@@ -14,18 +14,29 @@
 
 // ---------------------------------------------------------------------------------
 
-Enemy::Enemy()
+Enemy::Enemy(int index)
 {
 	sprite = new Sprite("Resources/Enemy.png");
 
-	int enemySize = 50.0f;
+	int enemySize = 64.0f;
 	BBox(new Rect((-enemySize / 2), (-enemySize / 2), (enemySize / 2), (enemySize / 2)));
 
-	float positions[1][2] = {
-		{window->CenterX() + enemySize /2 - enemySize - 5.0f, 80.0f}
+	float positions[12][2] = {
+		{window->CenterX() + enemySize / 2 - enemySize, window->CenterY() - 926.0f / 2 },
+		{window->CenterX() + enemySize / 2, window->CenterY() - 926.0f / 2},
+		{window->CenterX() + enemySize / 2 + enemySize, window->CenterY() - 926.0f / 2},
+		{window->CenterX() - 926.f / 2, window->CenterY() + enemySize / 2 - enemySize},
+		{window->CenterX() - 926.f / 2, window->CenterY() + enemySize / 2},
+		{window->CenterX() - 926.f / 2, window->CenterY() + enemySize / 2 + enemySize},
+		{window->CenterX() + enemySize / 2 - enemySize, window->CenterY() + 926.0f / 2 },
+		{window->CenterX() + enemySize / 2, window->CenterY() + 926.0f / 2},
+		{window->CenterX() + enemySize / 2 + enemySize, window->CenterY() + 926.0f / 2},
+		{window->CenterX() + 926.f / 2, window->CenterY() + enemySize / 2 - enemySize},
+		{window->CenterX() + 926.f / 2, window->CenterY() + enemySize / 2},
+		{window->CenterX() + 926.f / 2, window->CenterY() + enemySize / 2 + enemySize},
 	};
 
-	MoveTo(positions[0][0], positions[0][1]);
+	MoveTo(positions[index][0], positions[index][1]);
 	type = ENEMY;
 }
 

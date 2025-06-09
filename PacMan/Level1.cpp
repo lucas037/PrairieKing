@@ -35,8 +35,11 @@ void Level1::Init()
     Player * player = new Player();
     scene->Add(player, MOVING);
 
-    Enemy* enemy = new Enemy();
-    scene->Add(enemy, STATIC);
+    Enemy* enemy;
+    for (int i = 0; i < 12; i++) {
+        enemy = new Enemy(i);
+        scene->Add(enemy, STATIC);
+    }
 
     // cria pontos de mudança de direção
     Pivot * pivot;

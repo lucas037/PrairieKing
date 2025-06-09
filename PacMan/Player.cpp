@@ -20,7 +20,7 @@ Player::Player()
     spriteU = new Sprite("Resources/PlayerU.png");
     spriteD = new Sprite("Resources/PlayerD.png");
 
-    playerSize = 60.0f;
+    playerSize = 64.0f;
     speed = 400.0f;
 
 
