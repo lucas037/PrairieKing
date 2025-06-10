@@ -37,6 +37,7 @@ private:
     float velY = 0;                     // velocidade vertical do player
     float speed = 0;
     float playerSize = 0;
+    float lastPosition[2] = { 0.0f, 0.0f };
 
 public:
     uint currState = STOPED;            // estado atual do jogador

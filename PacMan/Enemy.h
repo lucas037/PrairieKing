@@ -29,7 +29,7 @@ private:
     Sprite* sprite = nullptr;          // sprite da comida
 
 public:
-    Enemy(int index);                             // construtor
+    Enemy(float x, float y);                             // construtor
     ~Enemy();                            // destrutor
 
     void Update();                      // atualização do objeto

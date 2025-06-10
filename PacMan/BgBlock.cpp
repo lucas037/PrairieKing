@@ -19,6 +19,11 @@ BgBlock::BgBlock(float x, float y, string name)
 	sprite = new Sprite("Resources/"+name+".png");
 
 	MoveTo(x, y);
+	
+	if (name == "bgBush") {
+		BBox(new Rect(-32.0, -32.0, 32.0, 32.0));
+		type = BUSH;
+	}
 }
 
 // ---------------------------------------------------------------------------------

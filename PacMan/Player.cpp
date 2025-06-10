@@ -52,6 +52,9 @@ void Player::Stop()
 
 void Player::OnCollision(Object * obj)
 {
+    if (obj->Type() == BUSH) {
+        MoveTo(lastPosition[0], lastPosition[1]);
+    }
 
 }
 
@@ -67,6 +70,9 @@ void Player::Update()
 {
     // MOVIMENTAÇÃO
     uint newShootDirection = NO_DIRECTION;
+
+    lastPosition[0] = X();
+    lastPosition[1] = Y();
 
     if (window->KeyDown(VK_LEFT) || window->KeyDown('A'))
     {

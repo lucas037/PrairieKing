@@ -17,6 +17,8 @@
 #include "Pivot.h"
 #include "Enemy.h"
 #include "Background.h"
+#include "MyRandom.h"
+#include <vector>
 #include <string>
 #include <fstream>
 using std::ifstream;
@@ -32,7 +34,6 @@ void Level1::Init()
     // cria background
     backg = new Sprite("");
 
-    float enemySpawnerPositions[12][2];
     Background* background = new Background();
     background->drawBackgroundLevel1(scene, window->CenterX(), window->CenterY(), window->Height(), enemySpawnerPositions);
 
@@ -40,41 +41,7 @@ void Level1::Init()
     Player * player = new Player();
     scene->Add(player, MOVING);
 
-    Enemy* enemy;
-    for (int i = 0; i < 12; i++) {
-        enemy = new Enemy(i);
-        // scene->Add(enemy, STATIC);
-    }
-
-    // cria pontos de mudança de direção
-    Pivot * pivot;
-    bool left, right, up, down;
-    float posX, posY;
-
-    // cria pivôs a partir do arquivo
-    ifstream fin;
-    fin.open("PivotsL1.txt");
-    fin >> left;
-    while (!fin.eof())
-    {
-        if (fin.good())
-        {
-            // lê linha de informações do pivô
-            fin >> right; fin >> up; fin >> down; fin >> posX; fin >> posY;
-            pivot = new Pivot(left, right, up, down);
-            pivot->MoveTo(posX, posY);
-            scene->Add(pivot, STATIC);
-        }
-        else
-        {
-            // ignora comentários
-            fin.clear();
-            char temp[80];
-            fin.getline(temp, 80);
-        }
-        fin >> left;
-    }
-    fin.close();
+    GenerateEnemies(4);
 }
 
 // ------------------------------------------------------------------------------
@@ -124,6 +91,36 @@ void Level1::Draw()
     // desenha bounding box dos objetos
     if (viewBBox)
         scene->DrawBBox();
+}
+
+void Level1::GenerateEnemies(int numEnemies) {
+    if (numEnemies > 12)
+        numEnemies = 12;
+
+    Enemy* enemy;
+    MyRandom rnd;
+    std::vector<int> indexesVector;
+
+    while (indexesVector.size() < numEnemies) {
+        int index = rnd.randrange(0, 12);
+
+        bool alreadyCreated = false;
+
+        for (int i = 0; i < indexesVector.size(); i++) {
+            if (indexesVector.at(i) == index) {
+                alreadyCreated = true;
+                break;
+            }
+        }
+
+        if (!alreadyCreated) {
+            indexesVector.push_back(index);
+
+            enemy = new Enemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1]);
+            scene->Add(enemy, STATIC);
+
+        }
+    }
 }
 
 // ------------------------------------------------------------------------------

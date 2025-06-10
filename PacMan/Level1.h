@@ -27,12 +27,14 @@ private:
     Sprite * backg = nullptr;       // background
     Scene * scene = nullptr;        // gerenciador de cena
     bool viewBBox = false;          // habilita visualização da bounding box
+    float enemySpawnerPositions[12][2];
 
 public:
     void Init();                    // inicializa jogo
     void Update();                  // atualiza lógica do jogo
     void Draw();                    // desenha jogo
     void Finalize();                // finaliza jogo
+    void GenerateEnemies(int numEnemies);
 };
 
 // -----------------------------------------------------------------------------

@@ -27,8 +27,8 @@ class Background
 private:
 
 public:
-    Background();                // construtor
-    ~Background();                              // destrutor
+    Background();                   // construtor
+    ~Background();                  // destrutor
     void drawBackgroundLevel1(Scene* scene, float centerX, float centerY, float screenHeight, float enemySpawnerPosition[12][2]);
 };
 
