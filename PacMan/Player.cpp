@@ -106,20 +106,6 @@ void Player::Update()
             newShootDirection = SHOOT_DOWN;
     }
 
-    // MANTER-SE DENTRO DA TELA DO JOGO
-    if (x + (playerSize / 2) < window->CenterX() - 365.0f) {
-        Translate(speed * gameTime, 0.0f);
-    }
-    else if (x + (playerSize / 2) > window->CenterX() + playerSize + 365.0f + 2.0f) {
-        Translate(-speed * gameTime, 0.0f);
-    }
-    if (y + (playerSize / 2) < window->CenterY() - 365.0f) {
-        Translate(0.0f, speed * gameTime);
-    }
-    else if (y + (playerSize / 2) > window->CenterY() + playerSize + 365.0f + 5.0f) {
-        Translate(0.0f, -speed * gameTime);
-    }
-
     // ATIRAR
     if (newShootDirection != NO_DIRECTION && shootingDirection != newShootDirection) {
         shootingDirection = newShootDirection;
