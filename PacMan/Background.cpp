@@ -25,22 +25,22 @@ Background::~Background()
 {
 }
 
-void  Background::drawBackgroundLevel1(Scene * scene, float centerX, float centerY, float screenHeight) {
+void  Background::drawBackgroundLevel1(Scene * scene, float centerX, float centerY, float screenHeight, float enemySpawnerPosition[12][2]) {
     int bgSize = screenHeight / 64;
 
-    float initialPositionX = 0.0f + centerX;
-    float initialPositionY = 0.0f + centerY;
+    float initPositionX = 0.0f + centerX;
+    float initPositionY = 0.0f + centerY;
     int auxSize = 0;
 
     if (bgSize % 2 == 1) {
-        initialPositionX -= (64.0f / 2);
-        initialPositionY -= (64.0f / 2);
+        initPositionX -= (64.0f / 2);
+        initPositionY -= (64.0f / 2);
         bgSize--;
         auxSize++;
     }
 
-    initialPositionX -= (64.0f * (bgSize / 2.0));
-    initialPositionY -= (64.0f * (bgSize / 2.0));
+    initPositionX -= (64.0f * (bgSize / 2.0));
+    initPositionY -= (64.0f * (bgSize / 2.0));
 
     bgSize += auxSize;
 
@@ -54,8 +54,40 @@ void  Background::drawBackgroundLevel1(Scene * scene, float centerX, float cente
             else if (i == 1 || i == bgSize - 2 || j == 1 || j == bgSize - 2)
                 name = "bgSheet";
 
-            BgBlock* bgBlock = new BgBlock(initialPositionX + i * 64.0f, initialPositionY + j * 64.0f, name);
+            BgBlock* bgBlock = new BgBlock(initPositionX + i * 64.0f, initPositionY + j * 64.0f, name);
+
             scene->Add(bgBlock, STATIC);
         }
     }
+
+    initPositionX = centerX - 64.0 / 2;
+    initPositionY = centerY - 64.0 / 2;
+
+    float position[12][2] = {
+        { initPositionX - 64.0f, initPositionY - (bgSize / 2 * 64.0f) + 64.0f / 2},
+        { initPositionX, initPositionY - (bgSize / 2 * 64.0f) + 64.0f / 2},
+        { initPositionX + 64.0f, initPositionY - (bgSize / 2 * 64.0f) + 64.0f / 2},
+
+        { initPositionX - 64.0f, initPositionY + (bgSize / 2 * 64.0f) - 64.0f / 2},
+        { initPositionX, initPositionY + (bgSize / 2 * 64.0f) - 64.0f / 2},
+        { initPositionX + 64.0f, initPositionY + (bgSize / 2 * 64.0f) - 64.0f / 2},
+
+        { initPositionX + (bgSize / 2 * 64.0f) - 64.0f / 2, initPositionY - 64.0f},
+        { initPositionX + (bgSize / 2 * 64.0f) - 64.0f / 2, initPositionY},
+        { initPositionX + (bgSize / 2 * 64.0f) - 64.0f / 2, initPositionY + 64.0f},
+
+        { initPositionX - (bgSize / 2 * 64.0f) + 64.0f / 2, initPositionY - 64.0f},
+        { initPositionX - (bgSize / 2 * 64.0f) + 64.0f / 2, initPositionY},
+        { initPositionX - (bgSize / 2 * 64.0f) + 64.0f / 2, initPositionY + 64.0f},
+    };
+
+    for (int i = 0; i < 12; i++) {
+        enemySpawnerPosition[i][0] = position[i][0];
+        enemySpawnerPosition[i][1] = position[i][1];
+
+        BgBlock* bgBlock = new BgBlock(position[i][0], position[i][1], "bgRock");
+        scene->Add(bgBlock, STATIC);
+
+    }
+
 }

@@ -32,8 +32,9 @@ void Level1::Init()
     // cria background
     backg = new Sprite("");
 
+    float enemySpawnerPositions[12][2];
     Background* background = new Background();
-    background->drawBackgroundLevel1(scene, window->CenterX(), window->CenterY(), window->Height());
+    background->drawBackgroundLevel1(scene, window->CenterX(), window->CenterY(), window->Height(), enemySpawnerPositions);
 
     // cria jogador
     Player * player = new Player();
