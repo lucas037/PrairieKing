@@ -1,12 +1,12 @@
 #pragma once
 /**********************************************************************************
-// Enemy (Arquivo de CabeÁalho)
+// Enemy (Arquivo de Cabe√ßalho)
 //
-// CriaÁ„o:     03 Jan 2013
-// AtualizaÁ„o: 04 Mar 2023
+// Cria√ß√£o:     03 Jan 2013
+// Atualiza√ß√£o: 04 Mar 2023
 // Compilador:  Visual C++ 2022
 //
-// DescriÁ„o:   Pequenos inimigos
+// Descri√ß√£o:   Pequenos inimigos
 
 //
 **********************************************************************************/
@@ -15,9 +15,9 @@
 #define _PACMAN_ENEMY_H_
 
 // ---------------------------------------------------------------------------------
-// Inclusıes
+// Inclus√µes
 
-#include "Types.h"                      // tipos especÌficos da engine
+#include "Types.h"                      // tipos espec√≠ficos da engine
 #include "Object.h"                     // interface de Object
 #include "Sprite.h"                     // interface de Sprites
 
@@ -27,12 +27,15 @@ class Enemy : public Object
 {
 private:
     Sprite* sprite = nullptr;          // sprite da comida
+    float speed = 100.0f;              // velocidade do inimigo
+    Object* player = nullptr;          // referencia para o player
 
 public:
     Enemy(float x, float y);                             // construtor
     ~Enemy();                            // destrutor
 
-    void Update();                      // atualizaÁ„o do objeto
+    void SetPlayer(Object* playerRef);  // referencia ao player 
+    void Update();                      // atualiza√ß√£o do objeto
     void Draw();                        // desenho do objeto
 };
 
