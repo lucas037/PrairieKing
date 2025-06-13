@@ -38,6 +38,9 @@ Player::Player()
     type = PLAYER;
     currState = DOWN;
     shootingDirection = NO_DIRECTION;
+
+    rnd = new MyRandom();
+    lifes = 3;
 }
 
 // ---------------------------------------------------------------------------------
@@ -91,7 +94,13 @@ void Player::OnCollision(Object * obj)
         MoveTo(lastPosition[0], lastPosition[1]);
     }
 
+    if (obj->Type() == CHEST) {
+        scene->Delete(obj, STATIC);
+        GeneratePlayerBonus();
+    }
+
     if (obj->Type() == ENEMY) {
+        lifes--;
     }
 }
 
@@ -170,6 +179,9 @@ void Player::Update()
         Translate(0, speed * gameTime);
     }
 
+    
+
+
     for (int i = 0; i < bulletListSize; i++) {
         if (bulletList[i] != nullptr) {
             if (bulletList[i]->CanDelete() ||
@@ -182,11 +194,35 @@ void Player::Update()
         }
     }
 
-	shootingDirection = ChangePlayerShootDirection();
+    if (shootBoost != 0.0) {
+        shootBoost += Engine::frameTime;
 
-    Shoot();
+        shootingDirection = SHOOT_UPLEFT;
+        Shoot();
+        shootingDirection = SHOOT_UPRIGHT;
+        Shoot();
+        shootingDirection = SHOOT_DOWNLEFT;
+        Shoot();
+        shootingDirection = SHOOT_DOWNRIGHT;
+        Shoot();
+        shootingDirection = SHOOT_LEFT;
+        Shoot();
+        shootingDirection = SHOOT_RIGHT;
+        Shoot();
+        shootingDirection = SHOOT_UP;
+        Shoot();
+        shootingDirection = SHOOT_DOWN;
+        Shoot();
 
-    if (window->KeyPress(VK_SPACE)) { 
+        if (shootBoost > 4.5)
+            shootBoost = 0.0;
+    }
+    else {
+        shootingDirection = ChangePlayerShootDirection();
+        Shoot();
+    }
+
+    if (window->KeyPress(VK_SPACE)) {
         shootingDirection;
     }
 }
@@ -210,3 +246,16 @@ void Player::Draw()
 }
 
 // ---------------------------------------------------------------------------------
+
+void Player::GeneratePlayerBonus() {
+    int value = rnd->randrange(0, 2);
+
+    switch (value) {
+        case 0:
+            lifes++;
+            break;
+        case 1:
+            shootBoost = 0.1;
+            break;
+    }
+}

@@ -17,6 +17,7 @@
 
 #include "Game.h"
 #include "Sprite.h"
+#include "Sprite.h"
 #include "Scene.h"
 
 // ------------------------------------------------------------------------------

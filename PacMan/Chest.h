@@ -9,6 +9,8 @@
 #include "Types.h"
 #include "Object.h"
 #include "Sprite.h"
+#include "Engine.h"
+#include "Scene.h"
 
 // ---------------------------------------------------------------------------------
 
@@ -16,9 +18,11 @@ class Chest : public Object
 {
 private:
     Sprite* sprite = nullptr;
+    float unspawnTime = 0.0f;
+    Scene* scene;
 
 public:
-    Chest(float x, float y);
+    Chest(float x, float y, Scene * scene);
     ~Chest();
 
     void Update();

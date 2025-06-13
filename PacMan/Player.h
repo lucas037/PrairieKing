@@ -20,6 +20,7 @@
 #include "Sprite.h"                     // interface de Sprites
 #include "Scene.h"
 #include "Bullet.h"                     // interface de Bullet
+#include "MyRandom.h"
 #include <vector>
 
 // ---------------------------------------------------------------------------------
@@ -50,6 +51,11 @@ private:
     int bulletListSize = 0;
     float lastShootTime = 0;
 
+    MyRandom* rnd;
+    int lifes;
+
+    float shootBoost = 0.0;
+
 public:
     uint currState = STOPED;            // estado atual do jogador
     uint shootingDirection = SHOOT_DOWN;
@@ -70,6 +76,7 @@ public:
     
     void Update();                      // atualização do objeto
     void Draw();                        // desenho do objeto
+    void GeneratePlayerBonus();
 
 
 

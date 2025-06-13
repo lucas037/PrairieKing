@@ -56,7 +56,7 @@ void Enemy::OnCollision(Object* obj)
     if (obj->Type() == BULLET) { // morre
 
         if (rnd->randrange(1, 2) == 1) { // 10% de chande de spawnar um baú
-            Chest* chest = new Chest(X(), Y());
+            Chest* chest = new Chest(X(), Y(), scene);
             scene->Add(chest, STATIC);
         }
 
