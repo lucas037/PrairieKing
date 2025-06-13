@@ -43,6 +43,8 @@ void Level1::Init()
     scene->Add(playerObj, MOVING);
     player = playerObj;
 
+    playerObj->Scene(scene);
+
     // inicializa com um inimigo
     GenerateEnemies(1);
     currentEnemies = 1;

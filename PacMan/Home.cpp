@@ -17,7 +17,7 @@
 
 void Home::Init()
 {
-    backg = new Sprite("Resources/TitleScreen.jpg");
+    backg = new Sprite("Resources/start-menu-prairie.png");
 }
 
 // ------------------------------------------------------------------------------
@@ -36,7 +36,7 @@ void Home::Update()
         window->Close();
     
     // passa ao primeiro nível com ENTER
-    if (window->KeyPress(VK_RETURN))
+    if (window->KeyPress(VK_SPACE))
         Engine::Next<Level1>();
 }
 

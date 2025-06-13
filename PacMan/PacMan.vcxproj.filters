@@ -102,6 +102,9 @@
     <ClCompile Include="MyRandom.cpp">
       <Filter>Game\Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Game\Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -182,6 +185,9 @@
     <ClInclude Include="MyRandom.h">
       <Filter>Game\Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Game\Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="FoodL1.txt">
@@ -212,6 +218,18 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\..\..\Área de Trabalho\back_level1.png">
+      <Filter>Game\Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\player-back_resized.png">
+      <Filter>Game\Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\player-front_resized.png">
+      <Filter>Game\Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\player-left_resized.png">
+      <Filter>Game\Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\player-rigth_resized.png">
       <Filter>Game\Arquivos de Recurso</Filter>
     </Image>
   </ItemGroup>
