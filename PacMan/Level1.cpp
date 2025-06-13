@@ -145,7 +145,7 @@ void Level1::GenerateEnemies(int numEnemies) {
 
                 enemy = new Enemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1]);
                 enemy->SetPlayer(player);
-                scene->Add(enemy, STATIC);
+                scene->Add(enemy, MOVING);
             }
         }
     }
@@ -153,7 +153,7 @@ void Level1::GenerateEnemies(int numEnemies) {
         int index = rnd.randrange(0, 12);
         enemy = new Enemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1]);
         enemy->SetPlayer(player);
-        scene->Add(enemy, STATIC);
+        scene->Add(enemy, MOVING);
     }
 }
 

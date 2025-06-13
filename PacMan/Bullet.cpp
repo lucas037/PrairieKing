@@ -1,48 +1,49 @@
 #include "Bullet.h"
 
-Bullet::Bullet(float speedVal, float damageVal, Image* img, uint directionVal)
+Bullet::Bullet()
 {
-	image = img;
-	sprite = new Sprite(image);
-	speed = speedVal;
-	damage = damageVal;
-	direction = directionVal;
+	sprite = nullptr;
+	speedX = 0;
+	speedY = 0;
+	damage = 0;
+	direction = NO_DIRECTION;
 	type = BULLET;
-
-	BBox(new Circle(5));
+	canDelete = false;
 }
 
-Bullet::~Bullet()
+Bullet::~Bullet() {}
+
+void Bullet::MoveBullet()
 {
-	delete sprite;
+	switch (direction) {
+		case SHOOT_UP:
+			Translate(0, -speedY * gameTime);
+			break;
+		case SHOOT_DOWN:
+			Translate(0, speedY * gameTime);
+			break;
+		case SHOOT_LEFT:
+			Translate(-speedX * gameTime, 0);
+			break;
+		case SHOOT_RIGHT:
+			Translate(speedX * gameTime, 0);
+			break;
+		case SHOOT_UPLEFT:
+			Translate(-speedX * gameTime, -speedY * gameTime);
+			break;
+		case SHOOT_UPRIGHT:
+			Translate(speedX * gameTime, -speedY * gameTime);
+			break;
+		case SHOOT_DOWNLEFT:
+			Translate(-speedX * gameTime, speedY * gameTime);
+			break;
+		case SHOOT_DOWNRIGHT:
+			Translate(speedX * gameTime, speedY * gameTime);
+			break;
+	}
 }
 
 void Bullet::Update()
 {
-	switch (direction) {
-		case SHOOT_UP:
-			Translate(0, -speed * gameTime);
-			break;
-		case SHOOT_DOWN:
-			Translate(0, speed * gameTime);
-			break;
-		case SHOOT_LEFT:
-			Translate(-speed * gameTime, 0);
-			break;
-		case SHOOT_RIGHT:
-			Translate(speed * gameTime, 0);
-			break;
-		case SHOOT_UPLEFT:
-			Translate(-speed * gameTime, -speed * gameTime);
-			break;
-		case SHOOT_UPRIGHT:
-			Translate(speed * gameTime, -speed * gameTime);
-			break;
-		case SHOOT_DOWNLEFT:
-			Translate(-speed * gameTime, speed * gameTime);
-			break;
-		case SHOOT_DOWNRIGHT:
-			Translate(speed * gameTime, speed * gameTime);
-			break;
-	}
+	MoveBullet();
 }

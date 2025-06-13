@@ -17,7 +17,7 @@
 
 Enemy::Enemy(float x, float y)
 {
-	sprite = new Sprite("Resources/Enemy.png");
+	sprite = new Sprite("Resources/GhostBlueD.png");
 
 	int enemySize = 60.0f;
 	BBox(new Rect((-enemySize / 2), (-enemySize / 2), (enemySize / 2), (enemySize / 2)));
@@ -30,7 +30,7 @@ Enemy::Enemy(float x, float y)
 
 Enemy::~Enemy()
 {
-
+    delete sprite;
 }
 
 // ---------------------------------------------------------------------------------
@@ -38,6 +38,16 @@ Enemy::~Enemy()
 void Enemy::SetPlayer(Object* playerRef)
 {
     player = playerRef;
+}
+
+void Enemy::OnCollision(Object* obj)
+{
+    if (obj->Type() == ENEMY) {
+		int xDirection = X() - obj->X() > 0 ? 1 : -1;
+		int yDirection = Y() - obj->Y() > 0 ? 1 : -1;
+
+        MoveTo(x + xDirection * 0.45f, y + yDirection * 0.45f);
+    }
 }
 
 // ---------------------------------------------------------------------------------
