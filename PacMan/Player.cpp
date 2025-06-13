@@ -185,7 +185,6 @@ void Player::Update()
 
     if (window->KeyPress(VK_SPACE)) { 
         shootingDirection;
-        exit(0);
     }
 }
 

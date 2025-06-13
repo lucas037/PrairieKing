@@ -45,8 +45,6 @@ void Level1::Init()
 
     playerObj->Scene(scene);
 
-    // inicializa com um inimigo
-    GenerateEnemies(1);
     currentEnemies = 1;
 }
 
@@ -95,7 +93,7 @@ void Level1::Update()
 
         if (enemySpawnTimer >= enemySpawnInterval && currentEnemies < maxEnemies)
         {
-            GenerateEnemies(1);
+            GenerateEnemies(4);
             enemySpawnTimer = 0.0f; // reseta o timer
         }
 
@@ -119,11 +117,11 @@ void Level1::Draw()
 }
 
 void Level1::GenerateEnemies(int numEnemies) {
-    if (numEnemies > 12)
-        numEnemies = 12;
+    MyRandom rnd;
+
+    numEnemies = rnd.randrange(0, 8); // gera entre 0 e 7 inimigos (média de 3,5)
 
     Enemy* enemy;
-    MyRandom rnd;
     
     if (numEnemies > 1) {
         std::vector<int> indexesVector;
@@ -143,7 +141,7 @@ void Level1::GenerateEnemies(int numEnemies) {
             if (!alreadyCreated) {
                 indexesVector.push_back(index);
 
-                enemy = new Enemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1]);
+                enemy = new Enemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1], scene);
                 enemy->SetPlayer(player);
                 scene->Add(enemy, MOVING);
             }
@@ -151,7 +149,7 @@ void Level1::GenerateEnemies(int numEnemies) {
     }
     else {
         int index = rnd.randrange(0, 12);
-        enemy = new Enemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1]);
+        enemy = new Enemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1], scene);
         enemy->SetPlayer(player);
         scene->Add(enemy, MOVING);
     }

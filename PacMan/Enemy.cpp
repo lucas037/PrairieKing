@@ -15,7 +15,7 @@
 
 // ---------------------------------------------------------------------------------
 
-Enemy::Enemy(float x, float y)
+Enemy::Enemy(float x, float y, Scene * scene)
 {
 	sprite = new Sprite("Resources/GhostBlueD.png");
 
@@ -24,6 +24,7 @@ Enemy::Enemy(float x, float y)
 
 	MoveTo(x, y);
 	type = ENEMY;
+    this->scene = scene;
 }
 
 // ---------------------------------------------------------------------------------
@@ -47,6 +48,10 @@ void Enemy::OnCollision(Object* obj)
 		int yDirection = Y() - obj->Y() > 0 ? 1 : -1;
 
         MoveTo(x + xDirection * 0.45f, y + yDirection * 0.45f);
+    }
+
+    if (obj->Type() == BULLET) {
+        scene->Delete(this, MOVING);
     }
 }
 
