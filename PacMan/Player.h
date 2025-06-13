@@ -35,7 +35,7 @@ class Player : public Object
 private:
     Sprite* spriteU = nullptr;          // sprite do player indo para ci'm'a
     Sprite * spriteD = nullptr;         // sprite do player indo para baixo
-    Sprite* spriteL = nullptr;         
+    Sprite* spriteL = nullptr;
     Sprite* spriteR = nullptr;
     Scene* scene = nullptr;
     Image* baseBulletImg = nullptr;
@@ -52,15 +52,15 @@ private:
     float lastShootTime = 0;
 
     MyRandom* rnd;
-    int lifes;
 
     float shootBoost = 0.0;
 
 public:
     uint currState = STOPED;            // estado atual do jogador
     uint shootingDirection = SHOOT_DOWN;
+    int numlifesPlayer;
 
-    Player();                           // construtor
+    Player();
     ~Player();                          // destrutor
 
     void OnCollision(Object * obj);     // resolução da colisão

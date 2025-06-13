@@ -18,12 +18,12 @@
 
 // ---------------------------------------------------------------------------------
 
-Player::Player()
+Player::Player ()
 {
     spriteU = new Sprite("Resources/player-back_resized.png");
     spriteD = new Sprite("Resources/player-front_resized.png");
 	spriteL = new Sprite("Resources/player-left_resized.png");
-	spriteR = new Sprite("Resources/player-rigth_resized.png");
+    spriteR = new Sprite("Resources/player-rigth_resized.png");
     baseBulletImg = new Image("Resources/Bullet_default.png"); // sprites improvisados das balas
     piercingBulletImg = new Image("Resources/Food.png"); 
 	bulletListSize = 30;
@@ -40,7 +40,8 @@ Player::Player()
     shootingDirection = NO_DIRECTION;
 
     rnd = new MyRandom();
-    lifes = 3;
+
+    numlifesPlayer = 3;
 }
 
 // ---------------------------------------------------------------------------------
@@ -100,7 +101,10 @@ void Player::OnCollision(Object * obj)
     }
 
     if (obj->Type() == ENEMY) {
-        lifes--;
+        numlifesPlayer--;
+
+        if (numlifesPlayer == 0)
+            exit(0); // game over
     }
 }
 
@@ -243,6 +247,16 @@ void Player::Draw()
 		case SHOOT_DOWNRIGHT: spriteD->Draw(x, y, Layer::UPPER); break;
         default:  spriteD->Draw(x, y, Layer::UPPER); break;
     }
+
+    // desenha cena
+    float posHearts[2] = { 48.0f, 48.0f };
+
+    for (int i = 0; i < numlifesPlayer; i++) {
+        Sprite* spriteLifePlayer = new Sprite("Resources/life.png");
+        spriteLifePlayer->Draw(posHearts[0], posHearts[1] + i * 48.0f, Layer::UPPER);
+    }
+
+
 }
 
 // ---------------------------------------------------------------------------------
@@ -252,7 +266,7 @@ void Player::GeneratePlayerBonus() {
 
     switch (value) {
         case 0:
-            lifes++;
+            numlifesPlayer++;
             break;
         case 1:
             shootBoost = 0.1;

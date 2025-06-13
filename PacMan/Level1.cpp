@@ -32,11 +32,9 @@ void Level1::Init()
     // cria gerenciador de cena
     scene = new Scene();
 
-    // cria background
-    backg = new Sprite("");
-
+    // cria player
     Background* background = new Background();
-    background->drawBackgroundLevel1(scene, window->CenterX(), window->CenterY(), window->Height(), enemySpawnerPositions);
+    background->drawBackgroundLevel1(scene, window->CenterX(), window->CenterY(), window->Height(), initialPositionX, initialPositionY, enemySpawnerPositions);
 
     // cria jogador
     Player * playerObj = new Player();
@@ -46,13 +44,13 @@ void Level1::Init()
     playerObj->Scene(scene);
 
     currentEnemies = 1;
+
 }
 
 // ------------------------------------------------------------------------------
 
 void Level1::Finalize()
 {
-    delete backg;
     delete scene;
 }
 
@@ -107,8 +105,7 @@ void Level1::Update()
 
 void Level1::Draw()
 {
-    // desenha cena
-    backg->Draw(window->CenterX(), window->CenterY(), Layer::BACK);
+
     scene->Draw();
 
     // desenha bounding box dos objetos

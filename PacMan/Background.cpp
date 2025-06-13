@@ -25,11 +25,12 @@ Background::~Background()
 {
 }
 
-void  Background::drawBackgroundLevel1(Scene * scene, float centerX, float centerY, float screenHeight, float enemySpawnerPosition[12][2]) {
+void  Background::drawBackgroundLevel1(Scene * scene, float centerX, float centerY, float screenHeight, float* initialPositionX, float* initialPositionY, float enemySpawnerPosition[12][2]) {
     int bgSize = screenHeight / 64;
 
     float initPositionX = 0.0f + centerX;
     float initPositionY = 0.0f + centerY;
+
     int auxSize = 0;
 
     if (bgSize % 2 == 1) {
@@ -41,6 +42,9 @@ void  Background::drawBackgroundLevel1(Scene * scene, float centerX, float cente
 
     initPositionX -= (64.0f * (bgSize / 2.0));
     initPositionY -= (64.0f * (bgSize / 2.0));
+
+    *initialPositionX = initPositionX;
+    *initialPositionY = initPositionY;
 
     bgSize += auxSize;
 
