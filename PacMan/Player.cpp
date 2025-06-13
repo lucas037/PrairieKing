@@ -90,6 +90,9 @@ void Player::OnCollision(Object * obj)
     if (obj->Type() == BUSH) {
         MoveTo(lastPosition[0], lastPosition[1]);
     }
+
+    if (obj->Type() == ENEMY) {
+    }
 }
 
 uint Player::ChangePlayerShootDirection()

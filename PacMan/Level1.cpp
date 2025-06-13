@@ -119,7 +119,7 @@ void Level1::Draw()
 void Level1::GenerateEnemies(int numEnemies) {
     MyRandom rnd;
 
-    numEnemies = rnd.randrange(0, 8); // gera entre 0 e 7 inimigos (média de 3,5)
+    numEnemies = rnd.randrange(0, 7); // gera entre 0 e 6 inimigos (média de 3)
 
     Enemy* enemy;
     

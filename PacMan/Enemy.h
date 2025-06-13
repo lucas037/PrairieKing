@@ -21,6 +21,7 @@
 #include "Object.h"                     // interface de Object
 #include "Sprite.h"                     // interface de Sprites
 #include "Scene.h"
+#include "MyRandom.h"
 
 // ---------------------------------------------------------------------------------
 
@@ -31,6 +32,7 @@ private:
     float speed = 100.0f;              // velocidade do inimigo
     Object* player = nullptr;          // referencia para o player
     Scene* scene = nullptr;
+    MyRandom* rnd;
 
 public:
     Enemy(float x, float y, Scene * scene);            // construtor
