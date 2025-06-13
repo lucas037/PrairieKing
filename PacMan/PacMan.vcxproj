@@ -245,6 +245,8 @@
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="BgBlock.cpp" />
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="DefaultBullet.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Food.cpp" />
@@ -257,6 +259,7 @@
     <ClCompile Include="Level1.cpp" />
     <ClCompile Include="Level2.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="PiercingBullet.cpp" />
     <ClCompile Include="PtaisieKing.cpp" />
     <ClCompile Include="Pivot.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -271,6 +274,8 @@
   <ItemGroup>
     <ClInclude Include="Background.h" />
     <ClInclude Include="BgBlock.h" />
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="DefaultBullet.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Food.h" />
@@ -283,6 +288,7 @@
     <ClInclude Include="Level1.h" />
     <ClInclude Include="Level2.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="PiercingBullet.h" />
     <ClInclude Include="PraisieKing.h" />
     <ClInclude Include="Pivot.h" />
     <ClInclude Include="Player.h" />
@@ -349,6 +355,11 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\..\..\Área de Trabalho\back_level1.png" />
+    <Image Include="Resources\Bullet_default.png" />
+    <Image Include="Resources\player-back_resized.png" />
+    <Image Include="Resources\player-front_resized.png" />
+    <Image Include="Resources\player-left_resized.png" />
+    <Image Include="Resources\player-rigth_resized.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

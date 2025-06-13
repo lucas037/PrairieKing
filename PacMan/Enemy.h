@@ -31,9 +31,10 @@ private:
     Object* player = nullptr;          // referencia para o player
 
 public:
-    Enemy(float x, float y);                             // construtor
-    ~Enemy();                            // destrutor
+    Enemy(float x, float y);            // construtor
+    ~Enemy();                           // destrutor
 
+	void OnCollision(Object* obj);      // resolução da colisão
     void SetPlayer(Object* playerRef);  // referencia ao player 
     void Update();                      // atualização do objeto
     void Draw();                        // desenho do objeto
