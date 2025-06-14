@@ -19,6 +19,7 @@
 #include "Background.h"
 #include "MyRandom.h"
 #include "PraisieKing.h"
+#include "CowboyBoss.h"
 #include <vector>
 #include <string>
 #include <fstream>
@@ -44,6 +45,10 @@ void Level1::Init()
     player = playerObj;
 
     playerObj->Scene(scene);
+
+	CowboyBoss* boss = new CowboyBoss(scene, playerObj);
+	boss->MoveTo(window->CenterX(), window->CenterY() - 100);
+	scene->Add(boss, MOVING);
 
     // inicializa com um inimigo
     GenerateEnemies(1);

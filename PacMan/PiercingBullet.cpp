@@ -11,6 +11,8 @@ PiercingBullet::PiercingBullet(Image* img, float x, float y, uint direction)
 	canDelete = false;
 	BBox(new Circle(10));
 	piercingCount = 3; 
+
+	type = PLAYER_BULLET;
 }
 
 PiercingBullet::~PiercingBullet()
@@ -24,7 +26,7 @@ void PiercingBullet::OnCollision(Object* obj)
 		canDelete = true;
 	}
 
-	if (obj->Type() == ENEMY) {
+	if (obj->Type() == ENEMY || obj->Type() == BOSS) {
 		piercingCount--;
 		
 		if (piercingCount == 0) {

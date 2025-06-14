@@ -111,6 +111,12 @@
     <ClCompile Include="PiercingBullet.cpp">
       <Filter>Game\Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="CowboyBoss.cpp">
+      <Filter>Game\Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBullet.cpp">
+      <Filter>Game\Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -200,6 +206,12 @@
     <ClInclude Include="PiercingBullet.h">
       <Filter>Game\Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="CowboyBoss.h">
+      <Filter>Game\Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBullet.h">
+      <Filter>Game\Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="FoodL1.txt">
@@ -245,6 +257,9 @@
       <Filter>Game\Arquivos de Recurso</Filter>
     </Image>
     <Image Include="Resources\Bullet_default.png">
+      <Filter>Game\Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\cowboyBoss_back.png">
       <Filter>Game\Arquivos de Recurso</Filter>
     </Image>
   </ItemGroup>

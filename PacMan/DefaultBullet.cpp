@@ -10,11 +10,13 @@ DefaultBullet::DefaultBullet(Image* img, float x, float y, uint direction)
 	this->direction = direction;
 	canDelete = false;
 	BBox(new Circle(5));
+
+	type = PLAYER_BULLET;
 }
 
 void DefaultBullet::OnCollision(Object* obj)
 {
-	if (obj->Type() == BUSH || obj->Type() == ENEMY) {
+	if (obj->Type() == BUSH || obj->Type() == ENEMY || obj->Type() == BOSS) {
 		canDelete = true;
 	}
 }
