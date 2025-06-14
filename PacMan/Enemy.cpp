@@ -18,7 +18,7 @@
 
 Enemy::Enemy(float x, float y, Scene * scene)
 {
-	sprite = new Sprite("Resources/GhostBlueD.png");
+	sprite = new Sprite("Resources/enemyDown.png");
 
 	int enemySize = 60.0f;
 	BBox(new Rect((-enemySize / 2), (-enemySize / 2), (enemySize / 2), (enemySize / 2)));

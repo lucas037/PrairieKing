@@ -235,3 +235,16 @@ void Player::Draw()
 }
 
 // ---------------------------------------------------------------------------------
+
+void Player::GeneratePlayerBonus() {
+    int value = rnd->randrange(0, 2);
+
+    switch (value) {
+    case 0:
+        numlifesPlayer++;
+        break;
+    case 1:
+        shootBoost = 0.1;
+        break;
+    }
+}
