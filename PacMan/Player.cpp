@@ -1,11 +1,11 @@
 /**********************************************************************************
-// Player (Código Fonte)
+// Player (Cï¿½digo Fonte)
 // 
-// Criação:     01 Jan 2013
-// Atualização: 04 Mar 2023
+// Criaï¿½ï¿½o:     01 Jan 2013
+// Atualizaï¿½ï¿½o: 04 Mar 2023
 // Compilador:  Visual C++ 2022
 //
-// Descrição:   Player do jogo Prairie king
+// Descriï¿½ï¿½o:   Player do jogo Prairie king
 //
 **********************************************************************************/
 
@@ -26,6 +26,7 @@ Player::Player()
 	spriteR = new Sprite("Resources/playerRight.png");
     baseBulletImg = new Image("Resources/Bullet_default.png"); // sprites improvisados das balas
     piercingBulletImg = new Image("Resources/Food.png"); 
+
 	bulletListSize = 30;
     bulletList = std::vector<Bullet*>(bulletListSize, nullptr);
 	shootCooldown = 0.18f;
@@ -49,6 +50,12 @@ Player::~Player()
 	delete spriteL;
     delete spriteR;
 	delete baseBulletImg;
+
+    for (Bullet* b : bulletList) {
+        delete b;
+    }
+
+    bulletList.clear();
 }
 
 void Player::ChangeBulletType(uint bulletTypeVal)
@@ -89,6 +96,18 @@ void Player::OnCollision(Object * obj)
 {
     if (obj->Type() == BUSH) {
         MoveTo(lastPosition[0], lastPosition[1]);
+    }
+
+    if (obj->Type() == CHEST) {
+        scene->Delete(obj, STATIC);
+        GeneratePlayerBonus();
+    }
+
+    if (obj->Type() == ENEMY || obj->Type() == BULLET) {
+        numlifesPlayer--;
+
+        if (numlifesPlayer == 0)
+            exit(0);
     }
 }
 
@@ -142,7 +161,7 @@ void Player::Update()
     lastPosition[0] = X();
     lastPosition[1] = Y();
 
-    // FUNÇÃO PROVISÓRIA, SERVE PARA TESTAR OS TIPOS DE MUNIÇÃO
+    // FUNï¿½ï¿½O PROVISï¿½RIA, SERVE PARA TESTAR OS TIPOS DE MUNIï¿½ï¿½O
     if (window->KeyPress('F')) {
 		bulletType = (bulletType == DEFAULT_BULLET) ? PIERCING_BULLET : DEFAULT_BULLET; 
     }
@@ -204,6 +223,14 @@ void Player::Draw()
 		case SHOOT_DOWNLEFT:  spriteD->Draw(x, y, Layer::UPPER); break;
 		case SHOOT_DOWNRIGHT: spriteD->Draw(x, y, Layer::UPPER); break;
         default:  spriteD->Draw(x, y, Layer::UPPER); break;
+    }
+
+    // desenha cena
+    float posHearts[2] = { 48.0f, 48.0f };
+
+    for (int i = 0; i < numlifesPlayer; i++) {
+        Sprite* spriteLifePlayer = new Sprite("Resources/life.png");
+        spriteLifePlayer->Draw(posHearts[0], posHearts[1] + i * 48.0f, Layer::UPPER);
     }
 }
 

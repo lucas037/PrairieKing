@@ -78,9 +78,7 @@ void  Background::drawBackgroundLevel1(Scene * scene, float centerX, float cente
             //if ((i >= 1 && i <= bgSize-2) && (j >= 1 && j <= bgSize - 2))
             //    name = "bgSheet";
 
-            BgBlock* bgBlock = new BgBlock(initPositionX + i * 64.0f, initPositionY + j * 64.0f, name);
-
-            scene->Add(bgBlock, STATIC);
+            scene->Add(new BgBlock(initPositionX + i * 64.0f, initPositionY + j * 64.0f, name), STATIC);
         }
     }
 
@@ -109,9 +107,7 @@ void  Background::drawBackgroundLevel1(Scene * scene, float centerX, float cente
         enemySpawnerPosition[i][0] = position[i][0];
         enemySpawnerPosition[i][1] = position[i][1];
 
-        BgBlock* bgBlock = new BgBlock(position[i][0], position[i][1], "bgRock");
-        scene->Add(bgBlock, STATIC);
-
+        scene->Add(new BgBlock(position[i][0], position[i][1], "bgRock"), STATIC);
     }
 
 }
