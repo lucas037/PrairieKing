@@ -30,7 +30,7 @@ BgBlock::BgBlock(float x, float y, string name)
 
 BgBlock::~BgBlock()
 {
-
+	delete sprite;
 }
 
 // ---------------------------------------------------------------------------------

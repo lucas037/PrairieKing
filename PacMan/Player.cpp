@@ -24,8 +24,10 @@ Player::Player ()
     spriteD = new Sprite("Resources/player-front_resized.png");
 	spriteL = new Sprite("Resources/player-left_resized.png");
     spriteR = new Sprite("Resources/player-rigth_resized.png");
-    baseBulletImg = new Image("Resources/Bullet_default.png"); // sprites improvisados das balas
+    // sprites improvisados das balas
+    baseBulletImg = new Image("Resources/Bullet_default.png");
     piercingBulletImg = new Image("Resources/Food.png"); 
+
 	bulletListSize = 30;
     bulletList = std::vector<Bullet*>(bulletListSize, nullptr);
 	shootCooldown = 0.18f;
@@ -53,6 +55,12 @@ Player::~Player()
 	delete spriteL;
     delete spriteR;
 	delete baseBulletImg;
+
+    for (Bullet* b : bulletList) {
+        delete b;
+    }
+
+    bulletList.clear();
 }
 
 void Player::ChangeBulletType(uint bulletTypeVal)
@@ -100,11 +108,11 @@ void Player::OnCollision(Object * obj)
         GeneratePlayerBonus();
     }
 
-    if (obj->Type() == ENEMY) {
+    if (obj->Type() == ENEMY || obj->Type() == BULLET) {
         numlifesPlayer--;
 
         if (numlifesPlayer == 0)
-            exit(0); // game over
+            exit(0);
     }
 }
 
@@ -183,9 +191,6 @@ void Player::Update()
         Translate(0, speed * gameTime);
     }
 
-    
-
-
     for (int i = 0; i < bulletListSize; i++) {
         if (bulletList[i] != nullptr) {
             if (bulletList[i]->CanDelete() ||
@@ -255,8 +260,6 @@ void Player::Draw()
         Sprite* spriteLifePlayer = new Sprite("Resources/life.png");
         spriteLifePlayer->Draw(posHearts[0], posHearts[1] + i * 48.0f, Layer::UPPER);
     }
-
-
 }
 
 // ---------------------------------------------------------------------------------

@@ -27,7 +27,6 @@ Enemy::Enemy(float x, float y, Scene * scene)
 	type = ENEMY;
     this->scene = scene;
     this->rnd = new MyRandom();
-    
 }
 
 // ---------------------------------------------------------------------------------
@@ -35,6 +34,7 @@ Enemy::Enemy(float x, float y, Scene * scene)
 Enemy::~Enemy()
 {
     delete sprite;
+	delete rnd;
 }
 
 // ---------------------------------------------------------------------------------
@@ -46,16 +46,16 @@ void Enemy::SetPlayer(Object* playerRef)
 
 void Enemy::OnCollision(Object* obj)
 {
-    if (obj->Type() == ENEMY) {
+    if (obj->Type() == ENEMY || obj->Type() == BOSS) {
 		int xDirection = X() - obj->X() > 0 ? 1 : -1;
 		int yDirection = Y() - obj->Y() > 0 ? 1 : -1;
 
         MoveTo(x + xDirection * 0.45f, y + yDirection * 0.45f);
     }
 
-    if (obj->Type() == BULLET) { // morre
+    if (obj->Type() == PLAYER_BULLET) { 
 
-        if (rnd->randrange(1, 16) == 1) { // 10% de chande de spawnar um baú
+        if (rnd->randrange(1, 16) == 1) {
             Chest* chest = new Chest(X(), Y(), scene);
             scene->Add(chest, STATIC);
         }

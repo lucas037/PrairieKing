@@ -23,6 +23,8 @@ public:
 
 	void MoveBullet();
 
+	float Damage() { return damage; };
+
 	void Update();
 	void Draw();
 
