@@ -20,6 +20,8 @@
 #include "Types.h"                      // tipos específicos da engine
 #include "Object.h"                     // interface de Object
 #include "Sprite.h"                     // interface de Sprites
+#include "Scene.h"
+#include "MyRandom.h"
 
 // ---------------------------------------------------------------------------------
 
@@ -29,9 +31,11 @@ private:
     Sprite* sprite = nullptr;          // sprite da comida
     float speed = 100.0f;              // velocidade do inimigo
     Object* player = nullptr;          // referencia para o player
+    Scene* scene = nullptr;
+    MyRandom* rnd;
 
 public:
-    Enemy(float x, float y);            // construtor
+    Enemy(float x, float y, Scene * scene);            // construtor
     ~Enemy();                           // destrutor
 
 	void OnCollision(Object* obj);      // resolução da colisão

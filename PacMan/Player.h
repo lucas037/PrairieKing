@@ -20,6 +20,7 @@
 #include "Sprite.h"                     // interface de Sprites
 #include "Scene.h"
 #include "Bullet.h"                     // interface de Bullet
+#include "MyRandom.h"
 #include <vector>
 
 // ---------------------------------------------------------------------------------
@@ -34,7 +35,7 @@ class Player : public Object
 private:
     Sprite* spriteU = nullptr;          // sprite do player indo para ci'm'a
     Sprite * spriteD = nullptr;         // sprite do player indo para baixo
-    Sprite* spriteL = nullptr;         
+    Sprite* spriteL = nullptr;
     Sprite* spriteR = nullptr;
     Scene* scene = nullptr;
     Image* baseBulletImg = nullptr;
@@ -50,11 +51,16 @@ private:
     int bulletListSize = 0;
     float lastShootTime = 0;
 
+    MyRandom* rnd;
+
+    float shootBoost = 0.0;
+
 public:
     uint currState = STOPED;            // estado atual do jogador
     uint shootingDirection = SHOOT_DOWN;
+    int numlifesPlayer;
 
-    Player();                           // construtor
+    Player();
     ~Player();                          // destrutor
 
     void OnCollision(Object * obj);     // resolução da colisão
@@ -70,6 +76,7 @@ public:
     
     void Update();                      // atualização do objeto
     void Draw();                        // desenho do objeto
+    void GeneratePlayerBonus();
 
 
 

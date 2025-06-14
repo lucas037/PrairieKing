@@ -17,6 +17,7 @@
 
 #include "Game.h"
 #include "Sprite.h"
+#include "Sprite.h"
 #include "Scene.h"
 
 // ------------------------------------------------------------------------------
@@ -24,7 +25,6 @@
 class Level1 : public Game
 {
 private:
-    Sprite * backg = nullptr;       // background
     Scene * scene = nullptr;        // gerenciador de cena
     Object * player = nullptr;      // referencia ao player
     bool viewBBox = false;          // habilita visualização da bounding box
@@ -33,6 +33,10 @@ private:
     const float enemySpawnInterval = 2.0f;  
     int maxEnemies = 8;                     
     int currentEnemies = 0;
+    float* initialPositionX = new float(0.0f);
+    float* initialPositionY = new float(0.0f);
+    int* numLifesPlayer = new int(0);
+
 
 public:
     void Init();                    // inicializa jogo

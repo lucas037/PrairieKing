@@ -25,6 +25,8 @@ enum PacManObjects
     ENEMY,
     BUSH,
     BULLET,
+    CHEST,
+    BULLET,
     BOSS,
     PLAYER_BULLET
 };

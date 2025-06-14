@@ -11,11 +11,12 @@
 
 #include "PraisieKing.h"
 #include "Enemy.h"
+#include "Chest.h"
 #include <cmath>
 
 // ---------------------------------------------------------------------------------
 
-Enemy::Enemy(float x, float y)
+Enemy::Enemy(float x, float y, Scene * scene)
 {
 	sprite = new Sprite("Resources/GhostBlueD.png");
 
@@ -24,6 +25,9 @@ Enemy::Enemy(float x, float y)
 
 	MoveTo(x, y);
 	type = ENEMY;
+    this->scene = scene;
+    this->rnd = new MyRandom();
+    
 }
 
 // ---------------------------------------------------------------------------------
@@ -47,6 +51,20 @@ void Enemy::OnCollision(Object* obj)
 		int yDirection = Y() - obj->Y() > 0 ? 1 : -1;
 
         MoveTo(x + xDirection * 0.45f, y + yDirection * 0.45f);
+    }
+
+    if (obj->Type() == BULLET) { // morre
+
+        if (rnd->randrange(1, 16) == 1) { // 10% de chande de spawnar um baú
+            Chest* chest = new Chest(X(), Y(), scene);
+            scene->Add(chest, STATIC);
+        }
+
+        scene->Delete(this, MOVING);
+    }
+
+    if (obj->Type() == PLAYER) {
+        scene->Delete(this, MOVING);
     }
 }
 
