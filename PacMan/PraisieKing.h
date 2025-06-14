@@ -24,7 +24,8 @@ enum PacManObjects
     BARRIER,
     ENEMY,
     BUSH,
-    BULLET
+    BULLET,
+    CHEST,
 };
 
 // ------------------------------------------------------------------------------

@@ -18,12 +18,12 @@
 
 // ---------------------------------------------------------------------------------
 
-Player::Player()
+Player::Player ()
 {
     spriteU = new Sprite("Resources/player-back_resized.png");
     spriteD = new Sprite("Resources/player-front_resized.png");
 	spriteL = new Sprite("Resources/player-left_resized.png");
-	spriteR = new Sprite("Resources/player-rigth_resized.png");
+    spriteR = new Sprite("Resources/player-rigth_resized.png");
     baseBulletImg = new Image("Resources/Bullet_default.png"); // sprites improvisados das balas
     piercingBulletImg = new Image("Resources/Food.png"); 
 	bulletListSize = 30;
@@ -38,6 +38,10 @@ Player::Player()
     type = PLAYER;
     currState = DOWN;
     shootingDirection = NO_DIRECTION;
+
+    rnd = new MyRandom();
+
+    numlifesPlayer = 3;
 }
 
 // ---------------------------------------------------------------------------------
@@ -89,6 +93,18 @@ void Player::OnCollision(Object * obj)
 {
     if (obj->Type() == BUSH) {
         MoveTo(lastPosition[0], lastPosition[1]);
+    }
+
+    if (obj->Type() == CHEST) {
+        scene->Delete(obj, STATIC);
+        GeneratePlayerBonus();
+    }
+
+    if (obj->Type() == ENEMY) {
+        numlifesPlayer--;
+
+        if (numlifesPlayer == 0)
+            exit(0); // game over
     }
 }
 
@@ -167,6 +183,9 @@ void Player::Update()
         Translate(0, speed * gameTime);
     }
 
+    
+
+
     for (int i = 0; i < bulletListSize; i++) {
         if (bulletList[i] != nullptr) {
             if (bulletList[i]->CanDelete() ||
@@ -179,13 +198,36 @@ void Player::Update()
         }
     }
 
-	shootingDirection = ChangePlayerShootDirection();
+    if (shootBoost != 0.0) {
+        shootBoost += Engine::frameTime;
 
-    Shoot();
+        shootingDirection = SHOOT_UPLEFT;
+        Shoot();
+        shootingDirection = SHOOT_UPRIGHT;
+        Shoot();
+        shootingDirection = SHOOT_DOWNLEFT;
+        Shoot();
+        shootingDirection = SHOOT_DOWNRIGHT;
+        Shoot();
+        shootingDirection = SHOOT_LEFT;
+        Shoot();
+        shootingDirection = SHOOT_RIGHT;
+        Shoot();
+        shootingDirection = SHOOT_UP;
+        Shoot();
+        shootingDirection = SHOOT_DOWN;
+        Shoot();
 
-    if (window->KeyPress(VK_SPACE)) { 
+        if (shootBoost > 4.5)
+            shootBoost = 0.0;
+    }
+    else {
+        shootingDirection = ChangePlayerShootDirection();
+        Shoot();
+    }
+
+    if (window->KeyPress(VK_SPACE)) {
         shootingDirection;
-        exit(0);
     }
 }
 
@@ -205,6 +247,29 @@ void Player::Draw()
 		case SHOOT_DOWNRIGHT: spriteD->Draw(x, y, Layer::UPPER); break;
         default:  spriteD->Draw(x, y, Layer::UPPER); break;
     }
+
+    // desenha cena
+    float posHearts[2] = { 48.0f, 48.0f };
+
+    for (int i = 0; i < numlifesPlayer; i++) {
+        Sprite* spriteLifePlayer = new Sprite("Resources/life.png");
+        spriteLifePlayer->Draw(posHearts[0], posHearts[1] + i * 48.0f, Layer::UPPER);
+    }
+
+
 }
 
 // ---------------------------------------------------------------------------------
+
+void Player::GeneratePlayerBonus() {
+    int value = rnd->randrange(0, 2);
+
+    switch (value) {
+        case 0:
+            numlifesPlayer++;
+            break;
+        case 1:
+            shootBoost = 0.1;
+            break;
+    }
+}

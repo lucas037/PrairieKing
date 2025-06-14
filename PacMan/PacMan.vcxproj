@@ -246,6 +246,7 @@
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="BgBlock.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Chest.cpp" />
     <ClCompile Include="DefaultBullet.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Engine.cpp" />
@@ -275,6 +276,7 @@
     <ClInclude Include="Background.h" />
     <ClInclude Include="BgBlock.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Chest.h" />
     <ClInclude Include="DefaultBullet.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Engine.h" />
