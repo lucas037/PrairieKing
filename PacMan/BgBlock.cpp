@@ -11,6 +11,7 @@
 
 #include "PraisieKing.h"
 #include "BgBlock.h"
+#include <regex>
 
 // ---------------------------------------------------------------------------------
 
@@ -20,7 +21,8 @@ BgBlock::BgBlock(float x, float y, string name)
 
 	MoveTo(x, y);
 	
-	if (name == "bgBush") {
+	std::regex bushRegex("^bgBush_");
+	if (std::regex_search(name, bushRegex)) {
 		BBox(new Rect(-32.0, -32.0, 32.0, 32.0));
 		type = BUSH;
 	}
