@@ -20,10 +20,10 @@
 
 Player::Player()
 {
-    spriteU = new Sprite("Resources/player-back_resized.png");
-    spriteD = new Sprite("Resources/player-front_resized.png");
-	spriteL = new Sprite("Resources/player-left_resized.png");
-	spriteR = new Sprite("Resources/player-rigth_resized.png");
+    spriteU = new Sprite("Resources/playerUp.png");
+    spriteD = new Sprite("Resources/playerDown.png");
+	spriteL = new Sprite("Resources/playerLeft.png");
+	spriteR = new Sprite("Resources/playerRight.png");
     baseBulletImg = new Image("Resources/Bullet_default.png"); // sprites improvisados das balas
     piercingBulletImg = new Image("Resources/Food.png"); 
 	bulletListSize = 30;
