@@ -9,7 +9,7 @@ CowboyBoss::CowboyBoss(Scene* scene, Player* player)
 
 	bulletListSize = 30;
 	bulletList = std::vector<Bullet*>(bulletListSize, nullptr);
-	shootCooldown = 0.30f;
+	shootCooldown = 0.80f;
 	lastShootTime = 0;
 
 	spriteFront = new Sprite("Resources/cowboyBoss_front.png");
@@ -119,6 +119,13 @@ void CowboyBoss::Draw()
 
 void CowboyBoss::OnCollision(Object* obj)
 {
+	if (obj->Type() == ENEMY) {
+		int xDirection = X() - obj->X() > 0 ? 1 : -1;
+		int yDirection = Y() - obj->Y() > 0 ? 1 : -1;
+
+		MoveTo(x + xDirection * 0.45f, y + yDirection * 0.45f);
+	}
+
 	if (obj->Type() == BUSH) {
 		MoveTo(previousX, previousY);
 
@@ -138,4 +145,10 @@ CowboyBoss::~CowboyBoss()
 	delete spriteFront;
 	delete spriteBack;
 	delete bulletImg;
+
+	for (Bullet* b : bulletList) {
+		delete b;
+	}
+
+	bulletList.clear();
 }
