@@ -12,8 +12,8 @@ CowboyBoss::CowboyBoss(Scene* scene, Player* player)
 	shootCooldown = 0.80f;
 	lastShootTime = 0;
 
-	spriteFront = new Sprite("Resources/cowboyBoss_front.png");
-	spriteBack = new Sprite("Resources/cowboyBoss_back.png");
+	spriteFront = new Sprite("Resources/bossDown.png");
+	spriteBack = new Sprite("Resources/bossUp.png");
 
 	type = BOSS;
 	rotationDirection = 1;

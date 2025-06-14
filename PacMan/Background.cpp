@@ -52,11 +52,31 @@ void  Background::drawBackgroundLevel1(Scene * scene, float centerX, float cente
         for (int j = 0; j < bgSize; j++) {
             string name = "bg";
 
-            if (i == 0 || i == bgSize - 1 || j == 0 || j == bgSize - 1)
-                name = "bgBush";
+            // Cantos 
+            if (i == 0 && j == 0)
+                name = "bgBush_top_left";
+            if (i == 0 && j == bgSize - 1)
+                name = "bgBush_bottom_left";
+            if (i == bgSize - 1 && j == 0)
+				name = "bgBush_top_right";
+            if (i == bgSize - 1 && j == bgSize - 1)
+				name = "bgBush_bottom_right";
 
-            else if (i == 1 || i == bgSize - 2 || j == 1 || j == bgSize - 2)
-                name = "bgSheet";
+            // Laterais
+            if (i == 0 && j > 0 && j < bgSize - 1)
+				name = "bgBush_left";
+			if (i == bgSize - 1 && j > 0 && j < bgSize - 1)
+				name = "bgBush_right";
+            if (j == 0 && i > 0 && i < bgSize - 1)
+                name = "bgBush_top";
+            if (j == bgSize - 1 && i > 0 && i < bgSize - 1)
+				name = "bgBush_bottom";
+
+            //if (i == 0 || i == bgSize - 1 || j == 0 || j == bgSize - 1)
+            //    name = "bgBush";
+
+            //if ((i >= 1 && i <= bgSize-2) && (j >= 1 && j <= bgSize - 2))
+            //    name = "bgSheet";
 
             scene->Add(new BgBlock(initPositionX + i * 64.0f, initPositionY + j * 64.0f, name), STATIC);
         }
