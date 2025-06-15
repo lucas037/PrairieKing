@@ -19,12 +19,14 @@
 #include "Sprite.h"
 #include "Sprite.h"
 #include "Scene.h"
+#include "Player.h"
 
 // ------------------------------------------------------------------------------
 
 class Level1 : public Game
 {
 private:
+    Player* playerObj = nullptr;
     Scene * scene = nullptr;        // gerenciador de cena
     Object * player = nullptr;      // referencia ao player
     bool viewBBox = false;          // habilita visualização da bounding box
@@ -35,7 +37,13 @@ private:
     int currentEnemies = 0;
     float* initialPositionX = new float(0.0f);
     float* initialPositionY = new float(0.0f);
+
     int* numLifesPlayer = new int(0);
+    int* enemiesKilled = new int(0);
+
+    boolean cowboySpawned = false;
+    int numEnemiesToSpawnCowboy = 25;
+    int numEnemiesToWin = numEnemiesToSpawnCowboy * 4;
 
 
 public:
@@ -44,6 +52,7 @@ public:
     void Draw();                    // desenha jogo
     void Finalize();                // finaliza jogo
     void GenerateEnemies(int numEnemies);
+    void GenerateCowboy(Player* playerObj);
 };
 
 // -----------------------------------------------------------------------------

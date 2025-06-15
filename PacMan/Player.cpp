@@ -113,8 +113,9 @@ void Player::OnCollision(Object * obj)
     if (obj->Type() == ENEMY || obj->Type() == BULLET) {
         numlifesPlayer--;
 
-        if (numlifesPlayer == 0)
+        if (numlifesPlayer <= 0) { // GAME OVER
             exit(0);
+        }
     }
 }
 
@@ -205,9 +206,45 @@ void Player::Update()
         }
     }
 
-	shootingDirection = ChangePlayerShootDirection();
+    if (boostTime > 0) {
+        boostTime -= Engine::frameTime;
 
-    Shoot();
+        if (boostTime < 0) {
+            boostTime = 0.0f;
+
+            if (boostType == SHOOT_PIERCING) {
+                bulletType = DEFAULT_BULLET;
+            }
+
+            boostType = NO_BOOST;
+        }
+
+    }
+
+
+
+    if (boostType == SHOOT_FLOOD) {
+        shootingDirection = SHOOT_UPLEFT;
+        Shoot();
+        shootingDirection = SHOOT_UPRIGHT;
+        Shoot();
+        shootingDirection = SHOOT_DOWNLEFT;
+        Shoot();
+        shootingDirection = SHOOT_DOWNRIGHT;
+        Shoot();
+        shootingDirection = SHOOT_LEFT;
+        Shoot();
+        shootingDirection = SHOOT_RIGHT;
+        Shoot();
+        shootingDirection = SHOOT_UP;
+        Shoot();
+        shootingDirection = SHOOT_DOWN;
+        Shoot();
+    }
+    else {
+        shootingDirection = ChangePlayerShootDirection();
+        Shoot();
+    }
 
     if (window->KeyPress(VK_SPACE)) { 
         shootingDirection;
@@ -257,14 +294,20 @@ void Player::Draw()
 // ---------------------------------------------------------------------------------
 
 void Player::GeneratePlayerBonus() {
-    int value = rnd->randrange(0, 2);
+    int value = rnd->randrange(0, 3);
 
     switch (value) {
     case 0:
         numlifesPlayer++;
         break;
     case 1:
-        shootBoost = 0.1;
+        boostTime = 4.5f;
+        boostType = SHOOT_FLOOD;
+        break;
+    case 2:
+        bulletType = PIERCING_BULLET;
+        boostTime = 15.0f;
+        boostType = SHOOT_PIERCING;
         break;
     }
 }

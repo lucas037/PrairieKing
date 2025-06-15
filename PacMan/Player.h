@@ -28,6 +28,7 @@
 
 // estados possíveis para o jogador
 enum PLAYERSTATE { STOPED, UP, DOWN };
+enum BOOSTTYPE { NO_BOOST, SHOOT_FLOOD, SHOOT_PIERCING };
 // ---------------------------------------------------------------------------------
 
 class Player : public Object
@@ -53,12 +54,15 @@ private:
 
     MyRandom* rnd;
 
-    float shootBoost = 0.0;
-
     int numlifesPlayer = 5;
     std::vector<Sprite*> spritesLifePlayer;
 
     Sprite* spritesLife[6];
+
+    float boostTime;
+    int boostType;
+
+
 
 public:
     uint currState = STOPED;            // estado atual do jogador

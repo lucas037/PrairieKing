@@ -38,15 +38,11 @@ void Level1::Init()
     background->drawBackgroundLevel1(scene, window->CenterX(), window->CenterY(), window->Height(), initialPositionX, initialPositionY, enemySpawnerPositions);
 
     // cria jogador
-    Player * playerObj = new Player();
+    playerObj = new Player();
     scene->Add(playerObj, MOVING);
     player = playerObj;
 
     playerObj->Scene(scene);
-
-	CowboyBoss* boss = new CowboyBoss(scene, playerObj);
-	boss->MoveTo(window->CenterX(), window->CenterY() - 100);
-	scene->Add(boss, MOVING);
 
     // inicializa com um inimigo
     GenerateEnemies(1);
@@ -59,6 +55,7 @@ void Level1::Init()
 void Level1::Finalize()
 {
     delete scene;
+    delete enemiesKilled;
 }
 
 // ------------------------------------------------------------------------------
@@ -101,6 +98,16 @@ void Level1::Update()
             GenerateEnemies(4);
             enemySpawnTimer = 0.0f; // reseta o timer
         }
+
+        if (!cowboySpawned && *enemiesKilled >= numEnemiesToSpawnCowboy) {
+            GenerateCowboy(playerObj);
+            cowboySpawned = true;
+        }
+
+        if (*enemiesKilled >= numEnemiesToWin) { // lógica de tela de vitória
+            exit(0);
+        }
+
 
         // atualiza cena
         scene->Update();
@@ -145,7 +152,7 @@ void Level1::GenerateEnemies(int numEnemies) {
             if (!alreadyCreated) {
                 indexesVector.push_back(index);
 
-                enemy = new Enemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1], scene);
+                enemy = new Enemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1], scene, enemiesKilled);
                 enemy->SetPlayer(player);
                 scene->Add(enemy, MOVING);
             }
@@ -153,10 +160,18 @@ void Level1::GenerateEnemies(int numEnemies) {
     }
     else {
         int index = rnd.randrange(0, 12);
-        enemy = new Enemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1], scene);
+        enemy = new Enemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1], scene, enemiesKilled);
         enemy->SetPlayer(player);
         scene->Add(enemy, MOVING);
     }
 }
 
 // ------------------------------------------------------------------------------
+
+
+void Level1::GenerateCowboy(Player* playerObj) {
+    CowboyBoss* boss = new CowboyBoss(scene, playerObj);
+    boss->MoveTo(window->CenterX(), window->CenterY() - 100);
+    scene->Add(boss, MOVING);
+
+}
