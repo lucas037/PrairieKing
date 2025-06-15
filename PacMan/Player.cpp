@@ -39,6 +39,9 @@ Player::Player()
     type = PLAYER;
     currState = DOWN;
     shootingDirection = NO_DIRECTION;
+
+    rnd = new MyRandom();
+
 }
 
 // ---------------------------------------------------------------------------------
@@ -50,6 +53,10 @@ Player::~Player()
 	delete spriteL;
     delete spriteR;
 	delete baseBulletImg;
+
+    for (Sprite* sprite : spritesLifePlayer) {
+        delete sprite;
+    }
 
     for (Bullet* b : bulletList) {
         delete b;
@@ -225,13 +232,26 @@ void Player::Draw()
         default:  spriteD->Draw(x, y, Layer::UPPER); break;
     }
 
+    for (int i = spritesLifePlayer.size(); i < numlifesPlayer; i++) {
+        spritesLifePlayer.push_back(new Sprite("Resources/Life.png"));
+    }
+
     // desenha cena
-    float posHearts[2] = { 48.0f, 48.0f };
+    float posHearts[2] = { 100.0f, 0.0f };
 
     for (int i = 0; i < numlifesPlayer; i++) {
-        Sprite* spriteLifePlayer = new Sprite("Resources/life.png");
-        spriteLifePlayer->Draw(posHearts[0], posHearts[1] + i * 48.0f, Layer::UPPER);
+        if (i % 2 == 0) {
+            posHearts[0] -= 48.0f;
+            posHearts[1] += 48.0f;
+        }
+        else {
+            posHearts[0] += 48.0f;
+
+        }
+
+        spritesLifePlayer[i]->Draw(posHearts[0], posHearts[1], Layer::UPPER);
     }
+
 }
 
 // ---------------------------------------------------------------------------------
