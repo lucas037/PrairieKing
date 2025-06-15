@@ -55,10 +55,14 @@ private:
 
     float shootBoost = 0.0;
 
+    int numlifesPlayer = 5;
+    std::vector<Sprite*> spritesLifePlayer;
+
+    Sprite* spritesLife[6];
+
 public:
     uint currState = STOPED;            // estado atual do jogador
     uint shootingDirection = SHOOT_DOWN;
-    int numlifesPlayer;
 
     Player();
     ~Player();                          // destrutor
