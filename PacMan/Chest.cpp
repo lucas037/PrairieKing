@@ -17,7 +17,7 @@ Chest::Chest(float x, float y, Scene * scene)
 
 Chest::~Chest()
 {
-
+	delete sprite;
 }
 
 // ---------------------------------------------------------------------------------
