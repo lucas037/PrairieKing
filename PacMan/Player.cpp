@@ -1,11 +1,11 @@
 /**********************************************************************************
-// Player (Código Fonte)
+// Player (Cï¿½digo Fonte)
 // 
-// Criação:     01 Jan 2013
-// Atualização: 04 Mar 2023
+// Criaï¿½ï¿½o:     01 Jan 2013
+// Atualizaï¿½ï¿½o: 04 Mar 2023
 // Compilador:  Visual C++ 2022
 //
-// Descrição:   Player do jogo Prairie king
+// Descriï¿½ï¿½o:   Player do jogo Prairie king
 //
 **********************************************************************************/
 
@@ -18,15 +18,13 @@
 
 // ---------------------------------------------------------------------------------
 
-Player::Player ()
+Player::Player()
 {
-    spriteU = new Sprite("Resources/player-back_resized.png");
-    spriteD = new Sprite("Resources/player-front_resized.png");
-	spriteL = new Sprite("Resources/player-left_resized.png");
-    spriteR = new Sprite("Resources/player-rigth_resized.png");
-
-    // sprites improvisados das balas
-    baseBulletImg = new Image("Resources/Bullet_default.png");
+    spriteU = new Sprite("Resources/playerUp.png");
+    spriteD = new Sprite("Resources/playerDown.png");
+	spriteL = new Sprite("Resources/playerLeft.png");
+	spriteR = new Sprite("Resources/playerRight.png");
+    baseBulletImg = new Image("Resources/Bullet_default.png"); // sprites improvisados das balas
     piercingBulletImg = new Image("Resources/Food.png"); 
 
 	bulletListSize = 30;
@@ -170,7 +168,7 @@ void Player::Update()
     lastPosition[0] = X();
     lastPosition[1] = Y();
 
-    // FUNÇÃO PROVISÓRIA, SERVE PARA TESTAR OS TIPOS DE MUNIÇÃO
+    // FUNï¿½ï¿½O PROVISï¿½RIA, SERVE PARA TESTAR OS TIPOS DE MUNIï¿½ï¿½O
     if (window->KeyPress('F')) {
 		bulletType = (bulletType == DEFAULT_BULLET) ? PIERCING_BULLET : DEFAULT_BULLET; 
     }
@@ -207,36 +205,13 @@ void Player::Update()
         }
     }
 
-    if (shootBoost != 0.0) {
-        shootBoost += Engine::frameTime;
+	shootingDirection = ChangePlayerShootDirection();
 
-        shootingDirection = SHOOT_UPLEFT;
-        Shoot();
-        shootingDirection = SHOOT_UPRIGHT;
-        Shoot();
-        shootingDirection = SHOOT_DOWNLEFT;
-        Shoot();
-        shootingDirection = SHOOT_DOWNRIGHT;
-        Shoot();
-        shootingDirection = SHOOT_LEFT;
-        Shoot();
-        shootingDirection = SHOOT_RIGHT;
-        Shoot();
-        shootingDirection = SHOOT_UP;
-        Shoot();
-        shootingDirection = SHOOT_DOWN;
-        Shoot();
+    Shoot();
 
-        if (shootBoost > 4.5)
-            shootBoost = 0.0;
-    }
-    else {
-        shootingDirection = ChangePlayerShootDirection();
-        Shoot();
-    }
-
-    if (window->KeyPress(VK_SPACE)) {
+    if (window->KeyPress(VK_SPACE)) { 
         shootingDirection;
+        exit(0);
     }
 }
 
@@ -285,11 +260,11 @@ void Player::GeneratePlayerBonus() {
     int value = rnd->randrange(0, 2);
 
     switch (value) {
-        case 0:
-            numlifesPlayer++;
-            break;
-        case 1:
-            shootBoost = 0.1;
-            break;
+    case 0:
+        numlifesPlayer++;
+        break;
+    case 1:
+        shootBoost = 0.1;
+        break;
     }
 }
