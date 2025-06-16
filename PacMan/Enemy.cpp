@@ -16,7 +16,7 @@
 
 // ---------------------------------------------------------------------------------
 
-Enemy::Enemy(float x, float y, Scene * scene)
+Enemy::Enemy(float x, float y, Scene * scene, int* enemiesKilled)
 {
 	sprite = new Sprite("Resources/enemyDown.png");
 
@@ -27,6 +27,7 @@ Enemy::Enemy(float x, float y, Scene * scene)
 	type = ENEMY;
     this->scene = scene;
     this->rnd = new MyRandom();
+    this->enemiesKilled = enemiesKilled;
 }
 
 // ---------------------------------------------------------------------------------
@@ -59,6 +60,8 @@ void Enemy::OnCollision(Object* obj)
             Chest* chest = new Chest(X(), Y(), scene);
             scene->Add(chest, STATIC);
         }
+
+        *enemiesKilled = *enemiesKilled + 1;
 
         scene->Delete(this, MOVING);
     }

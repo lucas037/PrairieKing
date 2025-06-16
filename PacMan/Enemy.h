@@ -33,9 +33,10 @@ private:
     Object* player = nullptr;          // referencia para o player
     Scene* scene = nullptr;
     MyRandom* rnd;
+    int * enemiesKilled;
 
 public:
-    Enemy(float x, float y, Scene * scene);            // construtor
+    Enemy(float x, float y, Scene * scene, int * enemiesKilled);            // construtor
     ~Enemy();                           // destrutor
 
 	void OnCollision(Object* obj);      // resolução da colisão
