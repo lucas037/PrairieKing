@@ -25,7 +25,13 @@ Player::Player()
 	spriteL = new Sprite("Resources/playerLeft.png");
 	spriteR = new Sprite("Resources/playerRight.png");
     baseBulletImg = new Image("Resources/Bullet_default.png"); // sprites improvisados das balas
-    piercingBulletImg = new Image("Resources/Food.png"); 
+    piercingBulletImg = new Image("Resources/Food.png");
+
+    spritesLife[0] = new Sprite("Resources/Life1.png");
+    spritesLife[1] = new Sprite("Resources/Life2.png");
+    spritesLife[2] = new Sprite("Resources/Life3.png");
+    spritesLife[3] = new Sprite("Resources/Life4.png");
+    spritesLife[4] = new Sprite("Resources/Life5.png");
 
 	bulletListSize = 30;
     bulletList = std::vector<Bullet*>(bulletListSize, nullptr);
@@ -55,7 +61,7 @@ Player::~Player()
 	delete baseBulletImg;
 	delete piercingBulletImg;
 
-    for (Sprite* sprite : spritesLifePlayer) {
+    for (Sprite* sprite : spritesLife) {
         delete sprite;
     }
 
@@ -272,25 +278,8 @@ void Player::Draw()
         default:  spriteD->Draw(x, y, Layer::UPPER); break;
     }
 
-    for (int i = spritesLifePlayer.size(); i < numlifesPlayer; i++) {
-        spritesLifePlayer.push_back(new Sprite("Resources/Life.png"));
-    }
-
-    // desenha cena
-    float posHearts[2] = { 100.0f, 0.0f };
-
-    for (int i = 0; i < numlifesPlayer; i++) {
-        if (i % 2 == 0) {
-            posHearts[0] -= 48.0f;
-            posHearts[1] += 48.0f;
-        }
-        else {
-            posHearts[0] += 48.0f;
-
-        }
-
-        spritesLifePlayer[i]->Draw(posHearts[0], posHearts[1], Layer::UPPER);
-    }
+    spriteLife = spritesLife[numlifesPlayer - 1];
+    spriteLife->Draw(X() - 5.0f , Y() - playerSize/1.2f, Layer::UPPER);
 
 }
 
@@ -301,7 +290,10 @@ void Player::GeneratePlayerBonus() {
 
     switch (value) {
     case 0:
-        numlifesPlayer++;
+        if (numlifesPlayer == 5) // limite a um máximo de 5 vidas
+            GeneratePlayerBonus();
+        else
+            numlifesPlayer++;
         break;
     case 1:
         boostTime = 4.5f;
