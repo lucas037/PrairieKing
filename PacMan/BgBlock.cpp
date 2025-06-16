@@ -17,15 +17,16 @@
 
 BgBlock::BgBlock(float x, float y, string name)
 {
-	sprite = new Sprite("Resources/"+name+".png");
-
-	MoveTo(x, y);
-	
 	std::regex bushRegex("^bgBush_");
 	if (std::regex_search(name, bushRegex)) {
+		name = "bgBush";
 		BBox(new Rect(-24, -24, 24, 24));
 		type = BUSH;
 	}
+
+	sprite = new Sprite("Resources/" + name + ".png");
+
+	MoveTo(x, y);
 }
 
 // ---------------------------------------------------------------------------------
