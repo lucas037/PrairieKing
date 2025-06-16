@@ -52,31 +52,48 @@ void  Background::drawBackgroundLevel1(Scene * scene, float centerX, float cente
         for (int j = 0; j < bgSize; j++) {
             string name = "bg";
 
-            // Cantos 
-            if (i == 0 && j == 0)
-                name = "bgBush_top_left";
-            if (i == 0 && j == bgSize - 1)
-                name = "bgBush_bottom_left";
-            if (i == bgSize - 1 && j == 0)
-				name = "bgBush_top_right";
-            if (i == bgSize - 1 && j == bgSize - 1)
-				name = "bgBush_bottom_right";
+            if (i == 0 || j == 0 || i == bgSize - 1 || j == bgSize - 1)
+                name = "bgWall";
 
-            // Laterais
-            if (i == 0 && j > 0 && j < bgSize - 1)
-				name = "bgBush_left";
-			if (i == bgSize - 1 && j > 0 && j < bgSize - 1)
-				name = "bgBush_right";
-            if (j == 0 && i > 0 && i < bgSize - 1)
-                name = "bgBush_top";
-            if (j == bgSize - 1 && i > 0 && i < bgSize - 1)
-				name = "bgBush_bottom";
+   //         // Cantos 
+   //         if (i == 0 && j == 0)
+   //             name = "bgGrass_top_left";
+   //         if (i == 0 && j == bgSize - 1)
+   //             name = "bgGrass_bottom_left";
+   //         if (i == bgSize - 1 && j == 0)
+			//	name = "bgGrass_top_right";
+   //         if (i == bgSize - 1 && j == bgSize - 1)
+			//	name = "bgGrass_bottom_right";
 
-            //if (i == 0 || i == bgSize - 1 || j == 0 || j == bgSize - 1)
-            //    name = "bgBush";
+   //         // Laterais
+   //         if (i == 0 && j > 0 && j < bgSize - 1)
+			//	name = "bgGrass_left";
+			//if (i == bgSize - 1 && j > 0 && j < bgSize - 1)
+			//	name = "bgGrass_right";
+   //         if (j == 0 && i > 0 && i < bgSize - 1)
+   //             name = "bgGrass_top";
+   //         if (j == bgSize - 1 && i > 0 && i < bgSize - 1)
+			//	name = "bgGrass_bottom";
 
-            //if ((i >= 1 && i <= bgSize-2) && (j >= 1 && j <= bgSize - 2))
-            //    name = "bgSheet";
+            // interno
+            if (i == 1 && j > 1 && j < bgSize - 1) // Borda Esquerda
+                name = "bgGrass_left";
+            if (i == bgSize - 2 && j > 1 && j < bgSize - 1) // Borda Direita
+                name = "bgGrass_right";
+            if (j == 1 && i > 1 && i < bgSize - 1) // Borda Superior
+                name = "bgGrass_top";
+            if (j == bgSize - 2 && i > 1 && i < bgSize - 1) // Borda Inferior
+                name = "bgGrass_bottom";
+
+            if (i == 1 && j == 1)
+				name = "bgGrass_top_left";
+			if (i == 1 && j == bgSize - 2)
+				name = "bgGrass_bottom_left";
+			if (i == bgSize - 2 && j == 1)
+				name = "bgGrass_top_right";
+			if (i == bgSize - 2 && j == bgSize - 2)
+				name = "bgGrass_bottom_right";
+
 
             scene->Add(new BgBlock(initPositionX + i * 48.0f, initPositionY + j * 48.0f, name), STATIC);
         }
@@ -111,7 +128,22 @@ void  Background::drawBackgroundLevel1(Scene * scene, float centerX, float cente
         enemySpawnerPosition[i][0] = position[i][0];
         enemySpawnerPosition[i][1] = position[i][1];
 
-        scene->Add(new BgBlock(position[i][0], position[i][1], "bgRock"), STATIC);
+        if (i < 3) // TOP
+        {
+            scene->Add(new BgBlock(position[i][0], position[i][1], "bgRock_top"), STATIC);
+        }
+        else if (i < 6) // DOWN
+        {
+            scene->Add(new BgBlock(position[i][0], position[i][1], "bgRock_bottom"), STATIC);
+        }
+        else if (i < 9) // RIGHT
+        {
+            scene->Add(new BgBlock(position[i][0], position[i][1], "bgRock_right"), STATIC);
+        }
+        else // LEFT
+        {
+            scene->Add(new BgBlock(position[i][0], position[i][1], "bgRock_left"), STATIC);
+		}        
     }
 
 }
