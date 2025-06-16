@@ -38,6 +38,10 @@ private:
     Sprite * spriteD = nullptr;         // sprite do player indo para baixo
     Sprite* spriteL = nullptr;
     Sprite* spriteR = nullptr;
+
+    Sprite* spritesLife[5];
+    Sprite* spriteLife = nullptr;
+
     Scene* scene = nullptr;
     Image* baseBulletImg = nullptr;
     Image* piercingBulletImg = nullptr;
@@ -55,9 +59,6 @@ private:
     MyRandom* rnd;
 
     int numlifesPlayer = 5;
-    std::vector<Sprite*> spritesLifePlayer;
-
-    Sprite* spritesLife[6];
 
     float boostTime;
     int boostType;

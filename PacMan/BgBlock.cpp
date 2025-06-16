@@ -1,17 +1,16 @@
 /**********************************************************************************
-// Enemy (Código Fonte)
+// Enemy (Cï¿½digo Fonte)
 //
-// Criação:     03 Jan 2013
-// Atualização: 04 Mar 2023
+// Criaï¿½ï¿½o:     03 Jan 2013
+// Atualizaï¿½ï¿½o: 04 Mar 2023
 // Compilador:  Visual C++ 2022
 //
-// Descrição:   Inimigos
+// Descriï¿½ï¿½o:   Inimigos
 //
 **********************************************************************************/
 
 #include "PraisieKing.h"
 #include "BgBlock.h"
-#include <regex>
 
 // ---------------------------------------------------------------------------------
 
@@ -21,11 +20,14 @@ BgBlock::BgBlock(float x, float y, string name)
 
 	MoveTo(x, y);
 	
-	std::regex bushRegex("^bgBush_");
-	if (std::regex_search(name, bushRegex)) {
+	if (name == "bgWall") {
 		BBox(new Rect(-24, -24, 24, 24));
 		type = BUSH;
 	}
+
+	sprite = new Sprite("Resources/" + name + ".png");
+
+	MoveTo(x, y);
 }
 
 // ---------------------------------------------------------------------------------
