@@ -18,7 +18,10 @@
 
 Enemy::Enemy(float x, float y, Scene * scene, int* enemiesKilled)
 {
-	sprite = new Sprite("Resources/enemyDown.png");
+    sprites[0] = new Sprite("Resources/skull_cowboy_front.png");   // frente
+    sprites[1] = new Sprite("Resources/skull_cowboy_back.png");    // costas
+    sprites[2] = new Sprite("Resources/skull_cowboy_left.png");    // esquerda
+    sprites[3] = new Sprite("Resources/skull_cowboy_right.png");   // direita
 
 	int enemySize = 60.0f;
 	BBox(new Rect((-enemySize / 2), (-enemySize / 2), (enemySize / 2), (enemySize / 2)));
@@ -34,7 +37,9 @@ Enemy::Enemy(float x, float y, Scene * scene, int* enemiesKilled)
 
 Enemy::~Enemy()
 {
-    delete sprite;
+    for (int i = 0; i < 4; i++) {
+        delete sprites[i];
+    }
 	delete rnd;
 }
 
@@ -79,17 +84,30 @@ void Enemy::Update()
     {
         float deltaX = player->X() - X();
         float deltaY = player->Y() - Y();
-        
+
         float distance = sqrt(deltaX * deltaX + deltaY * deltaY);
-        
+
         if (distance > 0)
         {
             float dirX = deltaX / distance;
             float dirY = deltaY / distance;
-            
+
+            // Define direção com base no vetor
+            if (fabs(dirX) > fabs(dirY))
+            {
+                direction = (dirX > 0) ? 3 : 2; // direita : esquerda
+            }
+            else
+            {
+                direction = (dirY > 0) ? 0 : 1; // costas : frente
+            }
+
+            // Movimentar
             Translate(dirX * speed * gameTime, dirY * speed * gameTime);
         }
     }
 }
+
+
 
 // ---------------------------------------------------------------------------------

@@ -28,7 +28,8 @@
 class Enemy : public Object
 {
 private:
-    Sprite* sprite = nullptr;          // sprite da comida
+    Sprite* sprites[4];                // 0 = frente, 1 = costas, 2 = esquerda, 3 = direita
+    int direction = 0;           
     float speed = 100.0f;              // velocidade do inimigo
     Object* player = nullptr;          // referencia para o player
     Scene* scene = nullptr;
@@ -49,7 +50,7 @@ public:
 
 inline void Enemy::Draw()
 {
-    sprite->Draw(x, y, z);
+    sprites[direction]->Draw(x, y, z);
 }
 
 // ---------------------------------------------------------------------------------
