@@ -23,7 +23,7 @@ BgBlock::BgBlock(float x, float y, string name)
 	
 	std::regex bushRegex("^bgBush_");
 	if (std::regex_search(name, bushRegex)) {
-		BBox(new Rect(-32.0, -32.0, 32.0, 32.0));
+		BBox(new Rect(-24, -24, 24, 24));
 		type = BUSH;
 	}
 }

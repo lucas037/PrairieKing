@@ -31,7 +31,7 @@ Player::Player()
     bulletList = std::vector<Bullet*>(bulletListSize, nullptr);
 	shootCooldown = 0.18f;
 
-    playerSize = 64.0f;
+    playerSize = 48.0f;
     speed = 200.0f;
 
     BBox(new Rect((-playerSize / 2), (-playerSize / 2), (playerSize / 2), (playerSize / 2)));

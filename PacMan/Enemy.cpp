@@ -23,7 +23,7 @@ Enemy::Enemy(float x, float y, Scene * scene, int* enemiesKilled)
     sprites[2] = new Sprite("Resources/skull_cowboy_left.png");    // esquerda
     sprites[3] = new Sprite("Resources/skull_cowboy_right.png");   // direita
 
-	int enemySize = 60.0f;
+	int enemySize = 48.0f;
 	BBox(new Rect((-enemySize / 2), (-enemySize / 2), (enemySize / 2), (enemySize / 2)));
 
 	MoveTo(x, y);
