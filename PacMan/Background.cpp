@@ -29,7 +29,7 @@ void  Background::drawBackgroundLevel1(Scene * scene, float centerX, float cente
     int bgSize = screenHeight / 48;
 
     float initPositionX = 0.0f + centerX;
-    float initPositionY = 0.0f + centerY;
+    float initPositionY = 25.0f + centerY;
 
     int auxSize = 0;
 
@@ -86,21 +86,25 @@ void  Background::drawBackgroundLevel1(Scene * scene, float centerX, float cente
     initPositionY = centerY - 48.0 / 2;
 
     float position[12][2] = {
+        // TOP
         { initPositionX - 48.0f, initPositionY - (bgSize / 2 * 48.0f) + 48.0f / 2},
         { initPositionX, initPositionY - (bgSize / 2 * 48.0f) + 48.0f / 2},
         { initPositionX + 48.0f, initPositionY - (bgSize / 2 * 48.0f) + 48.0f / 2},
+        
+        // DOWN
+        { initPositionX - 48.0f, initPositionY + (bgSize / 2 * 48.0f) - 48.0f / 2 + 50.0f},
+        { initPositionX, initPositionY + (bgSize / 2 * 48.0f) - 48.0f / 2 + 50.0f},
+        { initPositionX + 48.0f, initPositionY + (bgSize / 2 * 48.0f) - 48.0f / 2 + 50.0f},
 
-        { initPositionX - 48.0f, initPositionY + (bgSize / 2 * 48.0f) - 48.0f / 2},
-        { initPositionX, initPositionY + (bgSize / 2 * 48.0f) - 48.0f / 2},
-        { initPositionX + 48.0f, initPositionY + (bgSize / 2 * 48.0f) - 48.0f / 2},
+        // RIGHT
+        { initPositionX + (bgSize / 2 * 48.0f) - 48.0f / 2 + 25.0f, initPositionY - 48.0f},
+        { initPositionX + (bgSize / 2 * 48.0f) - 48.0f / 2 + 25.0f, initPositionY},
+        { initPositionX + (bgSize / 2 * 48.0f) - 48.0f / 2 + 25.0f, initPositionY + 48.0f},
 
-        { initPositionX + (bgSize / 2 * 48.0f) - 48.0f / 2, initPositionY - 48.0f},
-        { initPositionX + (bgSize / 2 * 48.0f) - 48.0f / 2, initPositionY},
-        { initPositionX + (bgSize / 2 * 48.0f) - 48.0f / 2, initPositionY + 48.0f},
-
-        { initPositionX - (bgSize / 2 * 48.0f) + 48.0f / 2, initPositionY - 48.0f},
-        { initPositionX - (bgSize / 2 * 48.0f) + 48.0f / 2, initPositionY},
-        { initPositionX - (bgSize / 2 * 48.0f) + 48.0f / 2, initPositionY + 48.0f},
+        // LEFT
+        { initPositionX - (bgSize / 2 * 48.0f) + 48.0f / 2 - 25.0f, initPositionY - 48.0f},
+        { initPositionX - (bgSize / 2 * 48.0f) + 48.0f / 2 - 25.0f, initPositionY},
+        { initPositionX - (bgSize / 2 * 48.0f) + 48.0f / 2 - 25.0f, initPositionY + 48.0f},
     };
 
     for (int i = 0; i < 12; i++) {
