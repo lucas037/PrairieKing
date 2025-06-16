@@ -53,12 +53,15 @@ Player::~Player()
 	delete spriteL;
     delete spriteR;
 	delete baseBulletImg;
+	delete piercingBulletImg;
 
     for (Sprite* sprite : spritesLifePlayer) {
         delete sprite;
     }
 
     for (Bullet* b : bulletList) {
+        scene->Remove(b, MOVING);
+
         delete b;
     }
 

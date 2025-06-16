@@ -54,6 +54,7 @@ void Level1::Init()
 
 void Level1::Finalize()
 {
+    delete scene;
     delete enemiesKilled;
 }
 
@@ -172,5 +173,4 @@ void Level1::GenerateCowboy(Player* playerObj) {
     CowboyBoss* boss = new CowboyBoss(scene, playerObj);
     boss->MoveTo(window->CenterX(), window->CenterY() - 100);
     scene->Add(boss, MOVING);
-
 }
