@@ -124,7 +124,6 @@ void Level1::Update()
 
 void Level1::Draw()
 {
-
     scene->Draw();
 
     // desenha bounding box dos objetos
