@@ -103,7 +103,7 @@ void CowboyBoss::Damage(float damage)
 	lifePoints = lifePoints - damage;
 
 	if (lifePoints <= 0) {
-		scene->Remove(this, MOVING);
+		scene->Delete(this, MOVING);
 	}
 }
 
@@ -147,6 +147,8 @@ CowboyBoss::~CowboyBoss()
 	delete bulletImg;
 
 	for (Bullet* b : bulletList) {
+		scene->Remove(b, MOVING);
+
 		delete b;
 	}
 
