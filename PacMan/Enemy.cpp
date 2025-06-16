@@ -20,7 +20,7 @@ Enemy::Enemy(float x, float y, Scene * scene, int* enemiesKilled)
 {
 	sprite = new Sprite("Resources/enemyDown.png");
 
-	int enemySize = 60.0f;
+	int enemySize = 48.0f;
 	BBox(new Rect((-enemySize / 2), (-enemySize / 2), (enemySize / 2), (enemySize / 2)));
 
 	MoveTo(x, y);
