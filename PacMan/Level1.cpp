@@ -54,7 +54,6 @@ void Level1::Init()
 
 void Level1::Finalize()
 {
-    delete scene;
     delete enemiesKilled;
 }
 
