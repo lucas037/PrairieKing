@@ -9,10 +9,10 @@ PiercingBullet::PiercingBullet(Image* img, float x, float y, uint direction)
 	damage = 1.0f;
 	this->direction = direction;
 	canDelete = false;
-	BBox(new Circle(10));
+	BBox(new Circle(5));
 	piercingCount = 3; 
 
-	type = PLAYER_BULLET;
+	type = PIERCING_BULLET;
 }
 
 PiercingBullet::~PiercingBullet()
@@ -33,8 +33,8 @@ void PiercingBullet::OnCollision(Object* obj)
 			canDelete = true;
 		}
 		else {
-			float offsetX = 40.0f;
-			float offsetY = 40.0f;
+			float offsetX = 53.0f;
+			float offsetY = 53.0f;
 
 			switch (direction) {
 				case SHOOT_UP:

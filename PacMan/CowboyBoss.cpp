@@ -135,7 +135,7 @@ void CowboyBoss::OnCollision(Object* obj)
 		}
 	}
 
-	if (obj->Type() == PLAYER_BULLET) {
+	if (obj->Type() == PLAYER_BULLET || obj->Type() == PIERCING_BULLET) {
 		Damage(1.0f);
 	}
 }
