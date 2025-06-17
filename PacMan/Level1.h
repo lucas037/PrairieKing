@@ -43,7 +43,7 @@ private:
 
     boolean cowboySpawned = false;
     int numEnemiesToSpawnCowboy = 25;
-    int numEnemiesToWin = numEnemiesToSpawnCowboy * 4;
+    int numEnemiesToWin = numEnemiesToSpawnCowboy * 3;
 
 
 public:

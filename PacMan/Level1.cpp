@@ -156,7 +156,7 @@ void Level1::Draw()
 void Level1::GenerateEnemies(int numEnemies) {
     MyRandom rnd;
 
-    numEnemies = rnd.randrange(0, 7); // gera entre 0 e 6 inimigos (média de 3)
+    numEnemies = rnd.randrange(1, 5); // gera entre 0 e 6 inimigos (média de 3)
 
     Enemy* enemy;
 	ShieldEnemy* shieldEnemy;
@@ -180,7 +180,7 @@ void Level1::GenerateEnemies(int numEnemies) {
                 indexesVector.push_back(index);
 
 				// Aleatoriamente escolhe entre criar um inimigo normal ou um inimigo com escudo
-				if (rnd.randrange(0, 2) == 0) {
+				if (rnd.randrange(0, 3) == 0) {
 					shieldEnemy = new ShieldEnemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1], scene, enemiesKilled);
 					shieldEnemy->SetPlayer(player);
 					scene->Add(shieldEnemy, MOVING);
