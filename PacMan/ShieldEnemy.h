@@ -36,6 +36,7 @@ private:
     Scene* scene = nullptr;
     MyRandom* rnd;
     int* enemiesKilled;
+    int* enemiesDespawned;
 	bool shieldActive = true;           // flag para escudo ativo
 	bool shieldBreak = false;           // flag para escudo quebrado
 	float shieldDuration = 0;           // duração do escudo em segundos
@@ -46,7 +47,7 @@ private:
 	void ShieldInactive();
 
 public:
-    ShieldEnemy(float x, float y, Scene* scene, int* enemiesKilled);            // construtor
+    ShieldEnemy(float x, float y, Scene* scene, int* enemiesKilled, int* enemiesDespawned);            // construtor
     ~ShieldEnemy();                           // destrutor
 
     void OnCollision(Object* obj);      // resolução da colisão

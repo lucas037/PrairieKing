@@ -17,7 +17,7 @@
 
 // ---------------------------------------------------------------------------------
 
-Enemy::Enemy(float x, float y, Scene * scene, int* enemiesKilled)
+Enemy::Enemy(float x, float y, Scene * scene, int* enemiesKilled, int* enemiesDespawned)
 {
     sprites[0] = new Sprite("Resources/skull_cowboy_front.png");   // frente
     sprites[1] = new Sprite("Resources/skull_cowboy_back.png");    // costas
@@ -32,6 +32,7 @@ Enemy::Enemy(float x, float y, Scene * scene, int* enemiesKilled)
     this->scene = scene;
     this->rnd = new MyRandom();
     this->enemiesKilled = enemiesKilled;
+    this->enemiesDespawned = enemiesDespawned;
 }
 
 // ---------------------------------------------------------------------------------
@@ -68,11 +69,14 @@ void Enemy::OnCollision(Object* obj)
         }
 
         *enemiesKilled = *enemiesKilled + 1;
+        *enemiesDespawned = *enemiesDespawned + 1;
 
         scene->Delete(this, MOVING);
     }
 
     if (obj->Type() == PLAYER) {
+        *enemiesDespawned = *enemiesDespawned + 1;
+
         scene->Delete(this, MOVING);
     }
 }

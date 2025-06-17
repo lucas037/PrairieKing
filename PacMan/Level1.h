@@ -39,11 +39,14 @@ private:
     float* initialPositionY = new float(0.0f);
 
     int* numLifesPlayer = new int(0);
+
     int* enemiesKilled = new int(0);
+    int* enemiesDespawned = new int(0);
+    int enemiesSpawned = 0;
 
     boolean cowboySpawned = false;
-    int numEnemiesToSpawnCowboy = 25;
-    int numEnemiesToWin = numEnemiesToSpawnCowboy * 4;
+    boolean * cowboyKilled = new boolean(false);
+    int numEnemiesToSpawnCowboy = 50;
 
 
 public:
