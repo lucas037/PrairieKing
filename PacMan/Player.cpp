@@ -32,6 +32,7 @@ Player::Player()
     spritesLife[2] = new Sprite("Resources/Life3.png");
     spritesLife[3] = new Sprite("Resources/Life4.png");
     spritesLife[4] = new Sprite("Resources/Life5.png");
+	spritesLife[5] = new Sprite("Resources/Life6.png");
 
 	bulletListSize = 30;
     bulletList = std::vector<Bullet*>(bulletListSize, nullptr);

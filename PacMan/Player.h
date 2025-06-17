@@ -39,7 +39,7 @@ private:
     Sprite* spriteL = nullptr;
     Sprite* spriteR = nullptr;
 
-    Sprite* spritesLife[5];
+    Sprite* spritesLife[6];
     Sprite* spriteLife = nullptr;
 
     Scene* scene = nullptr;
