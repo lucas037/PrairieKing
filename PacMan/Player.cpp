@@ -233,14 +233,6 @@ void Player::Update()
 
 
     if (boostType == SHOOT_FLOOD) {
-        shootingDirection = SHOOT_UPLEFT;
-        Shoot();
-        shootingDirection = SHOOT_UPRIGHT;
-        Shoot();
-        shootingDirection = SHOOT_DOWNLEFT;
-        Shoot();
-        shootingDirection = SHOOT_DOWNRIGHT;
-        Shoot();
         shootingDirection = SHOOT_LEFT;
         Shoot();
         shootingDirection = SHOOT_RIGHT;
@@ -248,6 +240,16 @@ void Player::Update()
         shootingDirection = SHOOT_UP;
         Shoot();
         shootingDirection = SHOOT_DOWN;
+        Shoot();
+    }
+    else if (boostType == SHOOT_FLOOD_DIAGONAL) {
+        shootingDirection = SHOOT_UPLEFT;
+        Shoot();
+        shootingDirection = SHOOT_UPRIGHT;
+        Shoot();
+        shootingDirection = SHOOT_DOWNLEFT;
+        Shoot();
+        shootingDirection = SHOOT_DOWNRIGHT;
         Shoot();
     }
     else {
@@ -296,8 +298,13 @@ void Player::GeneratePlayerBonus() {
             numlifesPlayer++;
         break;
     case 1:
-        boostTime = 4.5f;
-        boostType = SHOOT_FLOOD;
+        boostTime = 3.0f;
+
+        if (rnd->randrange(0, 2))
+            boostType = SHOOT_FLOOD;
+        else
+            boostType = SHOOT_FLOOD_DIAGONAL;
+
         break;
     case 2:
         bulletType = PIERCING_BULLET;
