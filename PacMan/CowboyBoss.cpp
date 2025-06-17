@@ -2,7 +2,7 @@
 #include "EnemyBullet.h"
 #include "Engine.h"
 
-CowboyBoss::CowboyBoss(Scene* scene, Player* player)
+CowboyBoss::CowboyBoss(Scene* scene, Player* player, boolean * killed)
 {
 	this->scene = scene;
 	this->player = player;
@@ -23,6 +23,8 @@ CowboyBoss::CowboyBoss(Scene* scene, Player* player)
 	lifePoints = 10.0f;
 	bulletImg = new Image("Resources/Bullet_default.png");
 	BBox(new Rect((-64 / 2), (-64 / 2), (64 / 2), (64 / 2)));
+
+	this->killed = killed;
 }
 
 void CowboyBoss::Update()
@@ -103,6 +105,7 @@ void CowboyBoss::Damage(float damage)
 	lifePoints = lifePoints - damage;
 
 	if (lifePoints <= 0) {
+		*killed = true;
 		scene->Delete(this, MOVING);
 	}
 }

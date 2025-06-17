@@ -48,9 +48,8 @@ void Level1::Init()
     playerObj->Scene(scene);
 
     // inicializa com um inimigo
-    GenerateEnemies(1);
+    GenerateEnemies(0);
     currentEnemies = 1;
-
 }
 
 // ------------------------------------------------------------------------------
@@ -115,25 +114,9 @@ void Level1::Update()
             cowboySpawned = true;
         }
 
-        // Verifica se o boss foi derrotado
-        if (cowboySpawned) {
-            bool bossAlive = false;
-            scene->Begin();
-            obj = scene->Next();
-            while (obj != nullptr) {
-                if (obj->Type() == BOSS) {
-                    bossAlive = true;
-                    break;
-                }
-                obj = scene->Next();
-            }
-
-            // venceu o jogo
-            if (!bossAlive) {
-                
-                Engine::Next<Victory>();
-                return;
-            }
+        if (*cowboyKilled && *enemiesKilled == enemiesSpawned) {
+            Engine::Next<Victory>();
+            return;
         }
 
         // atualiza cena
@@ -154,9 +137,14 @@ void Level1::Draw()
 }
 
 void Level1::GenerateEnemies(int numEnemies) {
+    if (*cowboyKilled)
+        return;
+
     MyRandom rnd;
 
-    numEnemies = rnd.randrange(1, 5); // gera entre 0 e 6 inimigos (média de 3)
+    numEnemies = rnd.randrange(1, 6); // gera entre 1 e 5 inimigos (média de 3)
+
+    enemiesSpawned += numEnemies; // armazena numero de inimigos spawnados
 
     Enemy* enemy;
 	ShieldEnemy* shieldEnemy;
@@ -213,7 +201,7 @@ void Level1::GenerateEnemies(int numEnemies) {
 
 
 void Level1::GenerateCowboy(Player* playerObj) {
-    CowboyBoss* boss = new CowboyBoss(scene, playerObj);
+    CowboyBoss* boss = new CowboyBoss(scene, playerObj, cowboyKilled);
     boss->MoveTo(window->CenterX(), window->CenterY() - 100);
     scene->Add(boss, MOVING);
 }

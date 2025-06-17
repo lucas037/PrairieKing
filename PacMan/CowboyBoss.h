@@ -19,13 +19,14 @@ private:
 	std::vector<Bullet*> bulletList;
 	Image* bulletImg;
 	float lifePoints;
+	boolean* killed;
 
 	uint state = ALIVE;
 
 	void Attack();
 	void MoveToPlayer();
 public:
-	CowboyBoss(Scene* scene, Player* player);
+	CowboyBoss(Scene* scene, Player* player, boolean * killed);
 	~CowboyBoss();
 	void Update() override;
 	void Draw() override;
