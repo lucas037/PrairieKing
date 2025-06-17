@@ -7,7 +7,7 @@ Chest::Chest(float x, float y, Scene * scene)
 
 	MoveTo(x, y);
 
-	BBox(new Rect(-20.0, -20.0, 20.0, 20.0));
+	BBox(new Rect(-24.0, -24.0, 21.0, 21.0));
 	type = CHEST;
 
 	this->scene = scene;
