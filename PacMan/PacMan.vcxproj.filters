@@ -114,6 +114,9 @@
     <ClCompile Include="Chest.cpp">
       <Filter>Game\Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="ShieldEnemy.cpp">
+      <Filter>Game\Arquivos de Origem</Filter>
+    </ClCompile>
     <ClCompile Include="EnemyCounter.cpp">
       <Filter>Game\Arquivos de Origem</Filter>
     </ClCompile>
@@ -207,9 +210,6 @@
       <Filter>Game\Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Chest.h">
-      <Filter>Game\Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyCounter.h">
       <Filter>Game\Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>
