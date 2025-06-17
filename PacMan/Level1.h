@@ -41,6 +41,7 @@ private:
     int* numLifesPlayer = new int(0);
 
     int* enemiesKilled = new int(0);
+    int* enemiesDespawned = new int(0);
     int enemiesSpawned = 0;
 
     boolean cowboySpawned = false;

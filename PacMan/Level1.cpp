@@ -114,7 +114,7 @@ void Level1::Update()
             cowboySpawned = true;
         }
 
-        if (*cowboyKilled && *enemiesKilled == enemiesSpawned) {
+        if (*cowboyKilled && *enemiesDespawned == enemiesSpawned) {
             Engine::Next<Victory>();
             return;
         }
@@ -169,12 +169,12 @@ void Level1::GenerateEnemies(int numEnemies) {
 
 				// Aleatoriamente escolhe entre criar um inimigo normal ou um inimigo com escudo
 				if (rnd.randrange(0, 3) == 0) {
-					shieldEnemy = new ShieldEnemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1], scene, enemiesKilled);
+					shieldEnemy = new ShieldEnemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1], scene, enemiesKilled, enemiesDespawned);
 					shieldEnemy->SetPlayer(player);
 					scene->Add(shieldEnemy, MOVING);
 				}
                 else {
-                    enemy = new Enemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1], scene, enemiesKilled);
+                    enemy = new Enemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1], scene, enemiesKilled, enemiesDespawned);
                     enemy->SetPlayer(player);
                     scene->Add(enemy, MOVING);
                 }
@@ -185,12 +185,12 @@ void Level1::GenerateEnemies(int numEnemies) {
         int index = rnd.randrange(0, 12);
 
         if (rnd.randrange(0, 2) == 0) {
-            shieldEnemy = new ShieldEnemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1], scene, enemiesKilled);
+            shieldEnemy = new ShieldEnemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1], scene, enemiesKilled, enemiesDespawned);
             shieldEnemy->SetPlayer(player);
             scene->Add(shieldEnemy, MOVING);
         }
         else {
-            enemy = new Enemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1], scene, enemiesKilled);
+            enemy = new Enemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1], scene, enemiesKilled, enemiesDespawned);
             enemy->SetPlayer(player);
             scene->Add(enemy, MOVING);
         }

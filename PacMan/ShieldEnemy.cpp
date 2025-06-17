@@ -20,7 +20,7 @@ float shieldCooldownC = 3.0f; // tempo de recarga do escudo
 
 // ---------------------------------------------------------------------------------
 
-ShieldEnemy::ShieldEnemy(float x, float y, Scene* scene, int* enemiesKilled)
+ShieldEnemy::ShieldEnemy(float x, float y, Scene* scene, int* enemiesKilled, int* enemiesDespawned)
 {
     sprites[0] = new Sprite("Resources/skull_cowboy_front.png");   // frente
     sprites[1] = new Sprite("Resources/skull_cowboy_back.png");    // costas
@@ -45,6 +45,7 @@ ShieldEnemy::ShieldEnemy(float x, float y, Scene* scene, int* enemiesKilled)
     this->scene = scene;
     this->rnd = new MyRandom();
     this->enemiesKilled = enemiesKilled;
+    this->enemiesDespawned = enemiesDespawned;
 }
 
 // ---------------------------------------------------------------------------------
@@ -100,11 +101,13 @@ void ShieldEnemy::OnCollision(Object* obj)
         }
 
         *enemiesKilled = *enemiesKilled + 1;
+        *enemiesDespawned = *enemiesDespawned + 1;
 
         scene->Delete(this, MOVING);
     }
 
     if (obj->Type() == PLAYER) {
+        *enemiesDespawned = *enemiesDespawned + 1;
         scene->Delete(this, MOVING);
     }
 }
