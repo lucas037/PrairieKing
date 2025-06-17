@@ -15,6 +15,9 @@
 #include "Bullet.h"
 #include <cmath>
 
+float shieldDurationC = 3.0f; // duração do escudo
+float shieldCooldownC = 3.0f; // tempo de recarga do escudo
+
 // ---------------------------------------------------------------------------------
 
 ShieldEnemy::ShieldEnemy(float x, float y, Scene* scene, int* enemiesKilled)
@@ -32,10 +35,10 @@ ShieldEnemy::ShieldEnemy(float x, float y, Scene* scene, int* enemiesKilled)
     int enemySize = 48.0f;
     BBox(new Rect((-enemySize / 2), (-enemySize / 2), (enemySize / 2), (enemySize / 2)));
 
-    speed = 80.0f;
-    float shieldDuration = 5.0f; 
-    float shieldCooldown = 3.0f;
-	shieldLife = 10.0f;
+    speed = 70.0f;
+    float shieldDuration = shieldDurationC; 
+    float shieldCooldown = shieldCooldownC;
+	shieldLife = 5.0f;
 
     MoveTo(x, y);
     type = ENEMY;
@@ -77,7 +80,7 @@ void ShieldEnemy::OnCollision(Object* obj)
             shieldActive = false;
 
             shieldBreak = true;
-            speed = 50.0f;
+            speed = 40.0f;
         }
         else if (obj->Type() == PLAYER_BULLET) {
             shieldLife -= 1;
@@ -118,7 +121,7 @@ void ShieldEnemy::ShieldActive()
 	shieldDuration -= Engine::frameTime;
 	if (shieldDuration <= 0) {
 		shieldActive = false;
-		shieldDuration = 5.0f;
+		shieldDuration = shieldDurationC;
 	}
 }
 
@@ -132,7 +135,7 @@ void ShieldEnemy::ShieldInactive()
 	shieldCooldown -= Engine::frameTime;
 	if (shieldCooldown <= 0) {
 		shieldActive = true;
-		shieldCooldown = 5.0f;
+		shieldCooldown = shieldCooldownC;
 	}
 }
 

@@ -43,10 +43,6 @@ void Level1::Init()
     scene->Add(playerObj, MOVING);
     player = playerObj;
 
-	ShieldEnemy* shieldEnemy = new ShieldEnemy(window->CenterX(), window->CenterY() - 100, scene, enemiesKilled);
-	shieldEnemy->SetPlayer(playerObj);
-	scene->Add(shieldEnemy, MOVING);
-
     playerObj->Scene(scene);
 
     // inicializa com um inimigo
