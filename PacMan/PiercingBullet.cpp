@@ -33,8 +33,8 @@ void PiercingBullet::OnCollision(Object* obj)
 			canDelete = true;
 		}
 		else {
-			float offsetX = 53.0f;
-			float offsetY = 53.0f;
+			float offsetX = 55.0f;
+			float offsetY = 55.0f;
 
 			switch (direction) {
 				case SHOOT_UP:

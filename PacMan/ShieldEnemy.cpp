@@ -22,15 +22,15 @@ float shieldCooldownC = 3.0f; // tempo de recarga do escudo
 
 ShieldEnemy::ShieldEnemy(float x, float y, Scene* scene, int* enemiesKilled)
 {
-    sprites[0] = new Sprite("Resources/skull_cowboy_front.png");   // frente
-    sprites[1] = new Sprite("Resources/skull_cowboy_back.png");    // costas
-    sprites[2] = new Sprite("Resources/skull_cowboy_left.png");    // esquerda
-    sprites[3] = new Sprite("Resources/skull_cowboy_right.png");   // direita
+    sprites[0] = new Sprite("Resources/skull_no_shield_d.png");   // frente
+    sprites[1] = new Sprite("Resources/skull_no_shield_u.png");    // costas
+    sprites[2] = new Sprite("Resources/skull_no_shield_l.png");    // esquerda
+    sprites[3] = new Sprite("Resources/skull_no_shield_r.png");   // direita
 	
-	spritesShield[0] = new Sprite("Resources/GhostRedD.png");   // frente com escudo
-	spritesShield[1] = new Sprite("Resources/GhostRedU.png");   // costas com escudo
-	spritesShield[2] = new Sprite("Resources/GhostRedL.png");   // esquerda com escudo
-	spritesShield[3] = new Sprite("Resources/GhostRedR.png");   // direita com escudo
+	spritesShield[0] = new Sprite("Resources/skull_with_shield_d.png");   // frente com escudo
+	spritesShield[1] = new Sprite("Resources/skull_with_shield_u.png");   // costas com escudo
+	spritesShield[2] = new Sprite("Resources/skull_with_shield_l.png");   // esquerda com escudo
+	spritesShield[3] = new Sprite("Resources/skull_with_shield_r.png");   // direita com escudo
 
     int enemySize = 48.0f;
     BBox(new Rect((-enemySize / 2), (-enemySize / 2), (enemySize / 2), (enemySize / 2)));

@@ -25,8 +25,8 @@ Player::Player()
     spriteD = new Sprite("Resources/playerDown.png");
 	spriteL = new Sprite("Resources/playerLeft.png");
 	spriteR = new Sprite("Resources/playerRight.png");
-    baseBulletImg = new Image("Resources/Bullet_default.png"); // sprites improvisados das balas
-    piercingBulletImg = new Image("Resources/Food.png");
+    baseBulletImg = new Image("Resources/Bullet_default.png");
+    piercingBulletImg = new Image("Resources/Bullet_piercing.png");
 
     spritesLife[0] = new Sprite("Resources/Life1.png");
     spritesLife[1] = new Sprite("Resources/Life2.png");
