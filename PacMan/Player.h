@@ -28,7 +28,7 @@
 
 // estados possíveis para o jogador
 enum PLAYERSTATE { STOPED, UP, DOWN };
-enum BOOSTTYPE { NO_BOOST, SHOOT_FLOOD, SHOOT_PIERCING };
+enum BOOSTTYPE { NO_BOOST, SHOOT_FLOOD, SHOOT_FLOOD_DIAGONAL, SHOOT_PIERCING };
 // ---------------------------------------------------------------------------------
 
 class Player : public Object
