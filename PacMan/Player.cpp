@@ -1,11 +1,11 @@
 /**********************************************************************************
-// Player (C�digo Fonte)
+// Player (Código Fonte)
 // 
-// Cria��o:     01 Jan 2013
-// Atualiza��o: 04 Mar 2023
+// Criação:     01 Jan 2013
+// Atualização: 04 Mar 2023
 // Compilador:  Visual C++ 2022
 //
-// Descri��o:   Player do jogo Prairie king
+// Descrição:   Player do jogo Prairie king
 //
 **********************************************************************************/
 
@@ -15,6 +15,7 @@
 #include "Engine.h"
 #include "DefaultBullet.h"
 #include "PiercingBullet.h"
+#include "GameOver.h"
 
 // ---------------------------------------------------------------------------------
 
@@ -124,7 +125,7 @@ void Player::OnCollision(Object * obj)
         numlifesPlayer--;
 
         if (numlifesPlayer <= 0) { // GAME OVER
-            exit(0);
+            isPlayerAlive = false;  // Define a flag como false
         }
     }
 }
@@ -176,10 +177,15 @@ void Player::PivotCollision(Object * obj)
 
 void Player::Update()
 {
+    // Se o player não estiver vivo, não processa nada
+    if (!isPlayerAlive) {
+        return;
+    }
+
     lastPosition[0] = X();
     lastPosition[1] = Y();
 
-    // FUN��O PROVIS�RIA, SERVE PARA TESTAR OS TIPOS DE MUNI��O
+    // FUNÇÃO PROVISÓRIA, SERVE PARA TESTAR OS TIPOS DE MUNIÇÃO
     if (window->KeyPress('F')) {
 		bulletType = (bulletType == DEFAULT_BULLET) ? PIERCING_BULLET : DEFAULT_BULLET; 
     }
@@ -228,8 +234,9 @@ void Player::Update()
 
             boostType = NO_BOOST;
         }
+    } 
 
-    }
+
 
 
 
@@ -267,23 +274,25 @@ void Player::Update()
 // ---------------------------------------------------------------------------------
 
 void Player::Draw()
-{ 
-    switch(shootingDirection)
-    {
+{
+    // Só desenha se o player estiver vivo
+    if (isPlayerAlive && numlifesPlayer > 0) {
+        switch (shootingDirection)
+        {
         case SHOOT_UP:    spriteU->Draw(x, y, Layer::UPPER); break;
         case SHOOT_DOWN:  spriteD->Draw(x, y, Layer::UPPER); break;
-		case SHOOT_LEFT:  spriteL->Draw(x, y, Layer::UPPER); break;
-		case SHOOT_RIGHT: spriteR->Draw(x, y, Layer::UPPER); break;
-		case SHOOT_UPLEFT:  spriteU->Draw(x, y, Layer::UPPER); break;
-		case SHOOT_UPRIGHT: spriteU->Draw(x, y, Layer::UPPER); break;
-		case SHOOT_DOWNLEFT:  spriteD->Draw(x, y, Layer::UPPER); break;
-		case SHOOT_DOWNRIGHT: spriteD->Draw(x, y, Layer::UPPER); break;
+        case SHOOT_LEFT:  spriteL->Draw(x, y, Layer::UPPER); break;
+        case SHOOT_RIGHT: spriteR->Draw(x, y, Layer::UPPER); break;
+        case SHOOT_UPLEFT:  spriteU->Draw(x, y, Layer::UPPER); break;
+        case SHOOT_UPRIGHT: spriteU->Draw(x, y, Layer::UPPER); break;
+        case SHOOT_DOWNLEFT:  spriteD->Draw(x, y, Layer::UPPER); break;
+        case SHOOT_DOWNRIGHT: spriteD->Draw(x, y, Layer::UPPER); break;
         default:  spriteD->Draw(x, y, Layer::UPPER); break;
+        }
+
+        spriteLife = spritesLife[numlifesPlayer - 1];
+        spriteLife->Draw(X() - 5.0f, Y() - playerSize / 1.2f, Layer::UPPER);
     }
-
-    spriteLife = spritesLife[numlifesPlayer - 1];
-    spriteLife->Draw(X() - 5.0f , Y() - playerSize/1.2f, Layer::UPPER);
-
 }
 
 // ---------------------------------------------------------------------------------

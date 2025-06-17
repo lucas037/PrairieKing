@@ -24,6 +24,8 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include "GameOver.h"
+#include "Victory.h"
 using std::ifstream;
 using std::string;
 
@@ -73,14 +75,22 @@ void Level1::Update()
     {
         // volta para a tela de abertura
         Engine::Next<Home>();
+        return;
     }
     else if (window->KeyPress('N'))
     {
         // passa manualmente para o próximo nível
         Engine::Next<Level2>();
+        return;
     }
     else
     {
+        // Verifica se o player ainda está vivo
+        if (playerObj && !playerObj->IsAlive()) {
+            Engine::Next<GameOver>();
+            return;
+        }
+
         // conta inimigos atuais na cena
         currentEnemies = 0;
         scene->Begin();
@@ -105,10 +115,26 @@ void Level1::Update()
             cowboySpawned = true;
         }
 
-        if (*enemiesKilled >= numEnemiesToWin) { // lógica de tela de vitória
-            exit(0);
-        }
+        // Verifica se o boss foi derrotado
+        if (cowboySpawned) {
+            bool bossAlive = false;
+            scene->Begin();
+            obj = scene->Next();
+            while (obj != nullptr) {
+                if (obj->Type() == BOSS) {
+                    bossAlive = true;
+                    break;
+                }
+                obj = scene->Next();
+            }
 
+            // venceu o jogo
+            if (!bossAlive) {
+                
+                Engine::Next<Victory>();
+                return;
+            }
+        }
 
         // atualiza cena
         scene->Update();

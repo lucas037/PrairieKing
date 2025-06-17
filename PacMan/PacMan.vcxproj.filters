@@ -117,6 +117,12 @@
     <ClCompile Include="ShieldEnemy.cpp">
       <Filter>Game\Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="GameOver.cpp">
+      <Filter>Game\Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Victory.cpp">
+      <Filter>Game\Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -212,6 +218,12 @@
     <ClInclude Include="ShieldEnemy.h">
       <Filter>Game\Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="GameOver.h">
+      <Filter>Game\Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Victory.h">
+      <Filter>Game\Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="FoodL1.txt">
@@ -260,6 +272,9 @@
       <Filter>Game\Arquivos de Recurso</Filter>
     </Image>
     <Image Include="Resources\cowboyBoss_back.png">
+      <Filter>Game\Arquivos de Recurso</Filter>
+    </Image>
+    <Image Include="Resources\gameover_screen.png">
       <Filter>Game\Arquivos de Recurso</Filter>
     </Image>
   </ItemGroup>

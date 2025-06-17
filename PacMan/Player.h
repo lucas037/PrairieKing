@@ -1,11 +1,11 @@
 /**********************************************************************************
-// Player (Arquivo de CabeÁalho)
+// Player (Arquivo de Cabe√ßalho)
 // 
-// CriaÁ„o:     01 Jan 2013
-// AtualizaÁ„o: 04 Mar 2023
+// Cria√ß√£o:     01 Jan 2013
+// Atualiza√ß√£o: 04 Mar 2023
 // Compilador:  Visual C++ 2022
 //
-// DescriÁ„o:   Player do jogo PacMan
+// Descri√ß√£o:   Player do jogo PacMan
 //
 **********************************************************************************/
 
@@ -13,20 +13,21 @@
 #define _PACMAN_PLAYER_H_
 
 // ---------------------------------------------------------------------------------
-// Inclusıes
+// Inclus√µes
 
-#include "Types.h"                      // tipos especÌficos da engine
+#include "Types.h"                      // tipos espec√≠ficos da engine
 #include "Object.h"                     // interface de Object
 #include "Sprite.h"                     // interface de Sprites
 #include "Scene.h"
 #include "Bullet.h"                     // interface de Bullet
 #include "MyRandom.h"
+#include "GameOver.h"
 #include <vector>
 
 // ---------------------------------------------------------------------------------
 // Constantes Globais
 
-// estados possÌveis para o jogador
+// estados poss√≠veis para o jogador
 enum PLAYERSTATE { STOPED, UP, DOWN };
 enum BOOSTTYPE { NO_BOOST, SHOOT_FLOOD, SHOOT_FLOOD_DIAGONAL, SHOOT_PIERCING };
 // ---------------------------------------------------------------------------------
@@ -46,7 +47,7 @@ private:
     Image* baseBulletImg = nullptr;
     Image* piercingBulletImg = nullptr;
     std::vector<Bullet*> bulletList;
-    uint bulletType = DEFAULT_BULLET;   // define o tipo de muniÁ„o atual
+    uint bulletType = DEFAULT_BULLET;   // define o tipo de muni√ß√£o atual
 	float shootCooldown = 0.2f;         // tempo de recarga do tiro
     float velX = 0;                     // velocidade horizontal do player
     float velY = 0;                     // velocidade vertical do player
@@ -59,11 +60,10 @@ private:
     MyRandom* rnd;
 
     int numlifesPlayer = 5;
+    bool isPlayerAlive = true;          // flag para verificar se o player est√° vivo
 
     float boostTime;
     int boostType;
-
-
 
 public:
     uint currState = STOPED;            // estado atual do jogador
@@ -72,22 +72,25 @@ public:
     Player();
     ~Player();                          // destrutor
 
-    void OnCollision(Object * obj);     // resoluÁ„o da colis„o
-    void PivotCollision(Object * obj);  // revolve colis„o com pivÙ
+    void OnCollision(Object * obj);     // resolu√ß√£o da colis√£o
+    void PivotCollision(Object * obj);  // revolve colis√£o com piv√¥
 
     uint ChangePlayerShootDirection();
 
     void ChangeBulletType(uint bulletType);
 
-	void Shoot();                                     // atira na direÁ„o atual do jogador e inclui na cena
+	void Shoot();                                     // atira na dire√ß√£o atual do jogador e inclui na cena
 
 	void Scene(Scene* scene) { this->scene = scene; } // define a cena do jogador
     
-    void Update();                      // atualizaÁ„o do objeto
+    void Update();                      // atualiza√ß√£o do objeto
     void Draw();                        // desenho do objeto
     void GeneratePlayerBonus();
 
-
+    // M√©todos para verificar e controlar o estado de vida do player
+    bool IsAlive() const { return isPlayerAlive; }
+    int GetLifes() const { return numlifesPlayer; }
+    void SetAlive(bool alive) { isPlayerAlive = alive; }
 
 };
 
