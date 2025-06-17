@@ -20,6 +20,7 @@
 #include "MyRandom.h"
 #include "PraisieKing.h"
 #include "CowboyBoss.h"
+#include "ShieldEnemy.h"
 #include <vector>
 #include <string>
 #include <fstream>
@@ -119,7 +120,6 @@ void Level1::Update()
 
 void Level1::Draw()
 {
-
     scene->Draw();
 
     // desenha bounding box dos objetos
@@ -133,6 +133,7 @@ void Level1::GenerateEnemies(int numEnemies) {
     numEnemies = rnd.randrange(0, 7); // gera entre 0 e 6 inimigos (média de 3)
 
     Enemy* enemy;
+	ShieldEnemy* shieldEnemy;
     
     if (numEnemies > 1) {
         std::vector<int> indexesVector;
@@ -152,17 +153,33 @@ void Level1::GenerateEnemies(int numEnemies) {
             if (!alreadyCreated) {
                 indexesVector.push_back(index);
 
-                enemy = new Enemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1], scene, enemiesKilled);
-                enemy->SetPlayer(player);
-                scene->Add(enemy, MOVING);
+				// Aleatoriamente escolhe entre criar um inimigo normal ou um inimigo com escudo
+				if (rnd.randrange(0, 2) == 0) {
+					shieldEnemy = new ShieldEnemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1], scene, enemiesKilled);
+					shieldEnemy->SetPlayer(player);
+					scene->Add(shieldEnemy, MOVING);
+				}
+                else {
+                    enemy = new Enemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1], scene, enemiesKilled);
+                    enemy->SetPlayer(player);
+                    scene->Add(enemy, MOVING);
+                }
             }
         }
     }
     else {
         int index = rnd.randrange(0, 12);
-        enemy = new Enemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1], scene, enemiesKilled);
-        enemy->SetPlayer(player);
-        scene->Add(enemy, MOVING);
+
+        if (rnd.randrange(0, 2) == 0) {
+            shieldEnemy = new ShieldEnemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1], scene, enemiesKilled);
+            shieldEnemy->SetPlayer(player);
+            scene->Add(shieldEnemy, MOVING);
+        }
+        else {
+            enemy = new Enemy(enemySpawnerPositions[index][0], enemySpawnerPositions[index][1], scene, enemiesKilled);
+            enemy->SetPlayer(player);
+            scene->Add(enemy, MOVING);
+        }
     }
 }
 

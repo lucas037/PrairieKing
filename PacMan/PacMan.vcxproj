@@ -251,7 +251,6 @@
     <ClCompile Include="DefaultBullet.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyBullet.cpp" />
-    <ClCompile Include="EnemyCounter.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Geometry.cpp" />
@@ -268,6 +267,7 @@
     <ClCompile Include="MyRandom.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="ShieldEnemy.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -278,7 +278,6 @@
     <ClInclude Include="BgBlock.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Chest.h" />
-    <ClInclude Include="EnemyCounter.h" />
     <ClInclude Include="DefaultBullet.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyBullet.h" />
@@ -300,6 +299,7 @@
     <ClInclude Include="Resources.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="CowboyBoss.h" />
+    <ClInclude Include="ShieldEnemy.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Timer.h" />
