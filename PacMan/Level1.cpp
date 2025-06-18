@@ -31,6 +31,10 @@ using std::string;
 
 // ------------------------------------------------------------------------------
 
+string Level1::medal = "";
+
+// ------------------------------------------------------------------------------
+
 void Level1::Init()
 {
     // cria gerenciador de cena
@@ -114,8 +118,26 @@ void Level1::Update()
             cowboySpawned = true;
         }
 
-        if (*cowboyKilled && *enemiesDespawned == enemiesSpawned) {
+        if (*cowboyKilled && *enemiesDespawned >= enemiesSpawned) {
+            if (*enemiesDespawned == *enemiesKilled)
+                medal = "gold_medal";
+            else if (playerObj->GetLifes() > 2)
+                medal = "silver_medal";
+            else
+                medal = "bronze_medal";
             
+            Engine::Next<Victory>();
+            return;
+        }
+
+        if (*enemiesDespawned >= 10) {
+            if (*enemiesDespawned == *enemiesKilled)
+                medal = "gold_medal";
+            else if (playerObj->GetLifes() > 2)
+                medal = "silver_medal";
+            else
+                medal = "bronze_medal";
+
             Engine::Next<Victory>();
             return;
         }
