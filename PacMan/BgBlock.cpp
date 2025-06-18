@@ -25,8 +25,6 @@ BgBlock::BgBlock(float x, float y, string name)
 		type = BUSH;
 	}
 
-	sprite = new Sprite("Resources/" + name + ".png");
-
 	MoveTo(x, y);
 }
 
