@@ -315,7 +315,7 @@ void Player::GeneratePlayerBonus() {
         break;
     case 2:
         bulletType = PIERCING_BULLET;
-        boostTime = 15.0f;
+        boostTime = 10.0f;
         boostType = SHOOT_PIERCING;
         break;
     }
