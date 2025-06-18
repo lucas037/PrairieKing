@@ -130,18 +130,6 @@ void Level1::Update()
             return;
         }
 
-        if (*enemiesDespawned >= 10) {
-            if (*enemiesDespawned == *enemiesKilled)
-                medal = "gold_medal";
-            else if (playerObj->GetLifes() > 2)
-                medal = "silver_medal";
-            else
-                medal = "bronze_medal";
-
-            Engine::Next<Victory>();
-            return;
-        }
-
         // atualiza cena
         scene->Update();
         scene->CollisionDetection();
