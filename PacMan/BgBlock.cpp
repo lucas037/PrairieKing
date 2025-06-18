@@ -1,34 +1,43 @@
 /**********************************************************************************
-// Food (Código Fonte)
-// 
-// Criação:     03 Jan 2013
-// Atualização: 04 Mar 2023
+// Enemy (Cï¿½digo Fonte)
+//
+// Criaï¿½ï¿½o:     03 Jan 2013
+// Atualizaï¿½ï¿½o: 04 Mar 2023
 // Compilador:  Visual C++ 2022
 //
-// Descrição:   Comida do PacMan
+// Descriï¿½ï¿½o:   Inimigos
 //
 **********************************************************************************/
 
 #include "PraisieKing.h"
-#include "Food.h"
+#include "BgBlock.h"
 
 // ---------------------------------------------------------------------------------
 
-Food::Food()
+BgBlock::BgBlock(float x, float y, string name)
 {
-    type = FOOD;
+	sprite = new Sprite("Resources/"+name+".png");
+
+	MoveTo(x, y);
+	
+	if (name == "bgWall") {
+		BBox(new Rect(-24, -24, 24, 24));
+		type = BUSH;
+	}
+
+	MoveTo(x, y);
 }
 
 // ---------------------------------------------------------------------------------
 
-Food::~Food()
+BgBlock::~BgBlock()
 {
-
+	delete sprite;
 }
 
 // ---------------------------------------------------------------------------------
 
-void Food::Update()
+void BgBlock::Update()
 {
 
 }

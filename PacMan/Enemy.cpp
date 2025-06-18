@@ -1,57 +1,118 @@
 /**********************************************************************************
-// Enemy (Código Fonte)
+// Enemy (CÃ³digo Fonte)
 //
-// Criação:     03 Jan 2013
-// Atualização: 04 Mar 2023
+// CriaÃ§Ã£o:     03 Jan 2013
+// AtualizaÃ§Ã£o: 04 Mar 2023
 // Compilador:  Visual C++ 2022
 //
-// Descrição:   Inimigos
+// DescriÃ§Ã£o:   Inimigos
 //
 **********************************************************************************/
 
 #include "PraisieKing.h"
 #include "Enemy.h"
+#include "Chest.h"
+#include "Bullet.h"
+#include <cmath>
 
 // ---------------------------------------------------------------------------------
 
-Enemy::Enemy(int index)
+Enemy::Enemy(float x, float y, Scene * scene, int* enemiesKilled, int* enemiesDespawned)
 {
-	sprite = new Sprite("Resources/Enemy.png");
+    sprites[0] = new Sprite("Resources/skull_cowboy_front.png");   // frente
+    sprites[1] = new Sprite("Resources/skull_cowboy_back.png");    // costas
+    sprites[2] = new Sprite("Resources/skull_cowboy_left.png");    // esquerda
+    sprites[3] = new Sprite("Resources/skull_cowboy_right.png");   // direita
 
-	int enemySize = 64.0f;
+	int enemySize = 48.0f;
 	BBox(new Rect((-enemySize / 2), (-enemySize / 2), (enemySize / 2), (enemySize / 2)));
 
-	float positions[12][2] = {
-		{window->CenterX() + enemySize / 2 - enemySize, window->CenterY() - 926.0f / 2 },
-		{window->CenterX() + enemySize / 2, window->CenterY() - 926.0f / 2},
-		{window->CenterX() + enemySize / 2 + enemySize, window->CenterY() - 926.0f / 2},
-		{window->CenterX() - 926.f / 2, window->CenterY() + enemySize / 2 - enemySize},
-		{window->CenterX() - 926.f / 2, window->CenterY() + enemySize / 2},
-		{window->CenterX() - 926.f / 2, window->CenterY() + enemySize / 2 + enemySize},
-		{window->CenterX() + enemySize / 2 - enemySize, window->CenterY() + 926.0f / 2 },
-		{window->CenterX() + enemySize / 2, window->CenterY() + 926.0f / 2},
-		{window->CenterX() + enemySize / 2 + enemySize, window->CenterY() + 926.0f / 2},
-		{window->CenterX() + 926.f / 2, window->CenterY() + enemySize / 2 - enemySize},
-		{window->CenterX() + 926.f / 2, window->CenterY() + enemySize / 2},
-		{window->CenterX() + 926.f / 2, window->CenterY() + enemySize / 2 + enemySize},
-	};
-
-	MoveTo(positions[index][0], positions[index][1]);
+	MoveTo(x, y);
 	type = ENEMY;
+    this->scene = scene;
+    this->rnd = new MyRandom();
+    this->enemiesKilled = enemiesKilled;
+    this->enemiesDespawned = enemiesDespawned;
 }
 
 // ---------------------------------------------------------------------------------
 
 Enemy::~Enemy()
 {
+    for (int i = 0; i < 4; i++) {
+        delete sprites[i];
+    }
+	delete rnd;
+}
 
+// ---------------------------------------------------------------------------------
+
+void Enemy::SetPlayer(Object* playerRef)
+{
+    player = playerRef;
+}
+
+void Enemy::OnCollision(Object* obj)
+{
+    if (obj->Type() == ENEMY || obj->Type() == BOSS) {
+		int xDirection = X() - obj->X() > 0 ? 1 : -1;
+		int yDirection = Y() - obj->Y() > 0 ? 1 : -1;
+
+        MoveTo(x + xDirection * 0.45f, y + yDirection * 0.45f);
+    }
+
+    if (obj->Type() == PLAYER_BULLET || obj->Type() == PIERCING_BULLET) {
+
+        if (rnd->randrange(1, 16) == 1) {
+            Chest* chest = new Chest(X(), Y(), scene);
+            scene->Add(chest, STATIC);
+        }
+
+        *enemiesKilled = *enemiesKilled + 1;
+        *enemiesDespawned = *enemiesDespawned + 1;
+
+        scene->Delete(this, MOVING);
+    }
+
+    if (obj->Type() == PLAYER) {
+        *enemiesDespawned = *enemiesDespawned + 1;
+
+        scene->Delete(this, MOVING);
+    }
 }
 
 // ---------------------------------------------------------------------------------
 
 void Enemy::Update()
 {
+    if (player != nullptr)
+    {
+        float deltaX = player->X() - X();
+        float deltaY = player->Y() - Y();
 
+        float distance = sqrt(deltaX * deltaX + deltaY * deltaY);
+
+        if (distance > 0)
+        {
+            float dirX = deltaX / distance;
+            float dirY = deltaY / distance;
+
+            // Define direÃ§Ã£o com base no vetor
+            if (fabs(dirX) > fabs(dirY))
+            {
+                direction = (dirX > 0) ? 3 : 2; // direita : esquerda
+            }
+            else
+            {
+                direction = (dirY > 0) ? 0 : 1; // costas : frente
+            }
+
+            // Movimentar
+            Translate(dirX * speed * gameTime, dirY * speed * gameTime);
+        }
+    }
 }
+
+
 
 // ---------------------------------------------------------------------------------

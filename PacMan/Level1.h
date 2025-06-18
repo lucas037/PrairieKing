@@ -1,11 +1,11 @@
 /**********************************************************************************
-// Level1 (Arquivo de CabeÁalho)
+// Level1 (Arquivo de Cabe√ßalho)
 // 
-// CriaÁ„o:     18 Jan 2013
-// AtualizaÁ„o: 04 Mar 2023
+// Cria√ß√£o:     18 Jan 2013
+// Atualiza√ß√£o: 04 Mar 2023
 // Compilador:  Visual C++ 2022
 //
-// DescriÁ„o:   NÌvel 1 do jogo PacMan
+// Descri√ß√£o:   N√≠vel 1 do jogo PacMan
 //
 **********************************************************************************/
 
@@ -13,26 +13,51 @@
 #define _PACMAN_LEVEL1_H_
 
 // ------------------------------------------------------------------------------
-// Inclusıes
+// Inclus√µes
 
 #include "Game.h"
 #include "Sprite.h"
+#include "Sprite.h"
 #include "Scene.h"
+#include "Player.h"
 
 // ------------------------------------------------------------------------------
 
 class Level1 : public Game
 {
 private:
-    Sprite * backg = nullptr;       // background
+    Player* playerObj = nullptr;
     Scene * scene = nullptr;        // gerenciador de cena
-    bool viewBBox = false;          // habilita visualizaÁ„o da bounding box
+    Object * player = nullptr;      // referencia ao player
+    bool viewBBox = false;          // habilita visualiza√ß√£o da bounding box
+    float enemySpawnerPositions[12][2];
+    float enemySpawnTimer = 0.0f;
+    const float enemySpawnInterval = 2.0f;  
+    int maxEnemies = 8;                     
+    int currentEnemies = 0;
+    float* initialPositionX = new float(0.0f);
+    float* initialPositionY = new float(0.0f);
+
+    int* numLifesPlayer = new int(0);
+
+    int* enemiesKilled = new int(0);
+    int* enemiesDespawned = new int(0);
+    int enemiesSpawned = 0;
+
+    boolean cowboySpawned = false;
+    boolean * cowboyKilled = new boolean(false);
+    int numEnemiesToSpawnCowboy = 50;
+
 
 public:
     void Init();                    // inicializa jogo
-    void Update();                  // atualiza lÛgica do jogo
+    void Update();                  // atualiza l√≥gica do jogo
     void Draw();                    // desenha jogo
     void Finalize();                // finaliza jogo
+    void GenerateEnemies(int numEnemies);
+    void GenerateCowboy(Player* playerObj);
+
+    static string medal;
 };
 
 // -----------------------------------------------------------------------------

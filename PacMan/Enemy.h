@@ -1,12 +1,12 @@
 #pragma once
 /**********************************************************************************
-// Enemy (Arquivo de Cabeçalho)
+// Enemy (Arquivo de CabeÃ§alho)
 //
-// Criação:     03 Jan 2013
-// Atualização: 04 Mar 2023
+// CriaÃ§Ã£o:     03 Jan 2013
+// AtualizaÃ§Ã£o: 04 Mar 2023
 // Compilador:  Visual C++ 2022
 //
-// Descrição:   Pequenos inimigos
+// DescriÃ§Ã£o:   Pequenos inimigos
 
 //
 **********************************************************************************/
@@ -15,24 +15,35 @@
 #define _PACMAN_ENEMY_H_
 
 // ---------------------------------------------------------------------------------
-// Inclusões
+// InclusÃµes
 
-#include "Types.h"                      // tipos específicos da engine
+#include "Types.h"                      // tipos especÃ­ficos da engine
 #include "Object.h"                     // interface de Object
 #include "Sprite.h"                     // interface de Sprites
+#include "Scene.h"
+#include "MyRandom.h"
 
 // ---------------------------------------------------------------------------------
 
 class Enemy : public Object
 {
 private:
-    Sprite* sprite = nullptr;          // sprite da comida
+    Sprite* sprites[4];                // 0 = frente, 1 = costas, 2 = esquerda, 3 = direita
+    int direction = 0;           
+    float speed = 100.0f;              // velocidade do inimigo
+    Object* player = nullptr;          // referencia para o player
+    Scene* scene = nullptr;
+    MyRandom* rnd;
+    int* enemiesKilled;
+    int* enemiesDespawned;
 
 public:
-    Enemy(int index);                             // construtor
-    ~Enemy();                            // destrutor
+    Enemy(float x, float y, Scene * scene, int* enemiesKilled, int* enemiesDespawned);            // construtor
+    ~Enemy();                           // destrutor
 
-    void Update();                      // atualização do objeto
+	void OnCollision(Object* obj);      // resoluÃ§Ã£o da colisÃ£o
+    void SetPlayer(Object* playerRef);  // referencia ao player 
+    void Update();                      // atualizaÃ§Ã£o do objeto
     void Draw();                        // desenho do objeto
 };
 
@@ -40,7 +51,7 @@ public:
 
 inline void Enemy::Draw()
 {
-    sprite->Draw(x, y, z);
+    sprites[direction]->Draw(x, y, z);
 }
 
 // ---------------------------------------------------------------------------------

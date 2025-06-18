@@ -1,35 +1,55 @@
 /**********************************************************************************
-// Player (CÛdigo Fonte)
+// Player (C√≥digo Fonte)
 // 
-// CriaÁ„o:     01 Jan 2013
-// AtualizaÁ„o: 04 Mar 2023
+// Cria√ß√£o:     01 Jan 2013
+// Atualiza√ß√£o: 04 Mar 2023
 // Compilador:  Visual C++ 2022
 //
-// DescriÁ„o:   Player do jogo PacMan
+// Descri√ß√£o:   Player do jogo Prairie king
 //
 **********************************************************************************/
 
 #include "PraisieKing.h"
 #include "Player.h"
 #include "Pivot.h"
+#include "Engine.h"
+#include "DefaultBullet.h"
+#include "PiercingBullet.h"
+#include "GameOver.h"
 
 // ---------------------------------------------------------------------------------
 
 Player::Player()
 {
-    spriteU = new Sprite("Resources/PlayerU.png");
-    spriteD = new Sprite("Resources/PlayerD.png");
+    spriteU = new Sprite("Resources/playerUp.png");
+    spriteD = new Sprite("Resources/playerDown.png");
+	spriteL = new Sprite("Resources/playerLeft.png");
+	spriteR = new Sprite("Resources/playerRight.png");
+    baseBulletImg = new Image("Resources/Bullet_default.png");
+    piercingBulletImg = new Image("Resources/Bullet_piercing.png");
 
-    playerSize = 64.0f;
-    speed = 400.0f;
+    spritesLife[0] = new Sprite("Resources/Life1.png");
+    spritesLife[1] = new Sprite("Resources/Life2.png");
+    spritesLife[2] = new Sprite("Resources/Life3.png");
+    spritesLife[3] = new Sprite("Resources/Life4.png");
+    spritesLife[4] = new Sprite("Resources/Life5.png");
+	spritesLife[5] = new Sprite("Resources/Life6.png");
 
+	bulletListSize = 30;
+    bulletList = std::vector<Bullet*>(bulletListSize, nullptr);
+	shootCooldown = 0.18f;
 
-    // imagem do pacman È 48x48 (com borda transparente de 4 pixel(s)
+    playerSize = 48.0f;
+    speed = 200.0f;
+
     BBox(new Rect((-playerSize / 2), (-playerSize / 2), (playerSize / 2), (playerSize / 2)));
-    MoveTo(window->CenterX() + (playerSize / 2), window->CenterY() + (playerSize / 2)); // inicialmente o jogador fica no meio
+    MoveTo(window->CenterX() + (playerSize / 2), window->CenterY() + (playerSize / 2));
     type = PLAYER;
     currState = DOWN;
-    shootingDirection = DOWN;
+    shootingDirection = NO_DIRECTION;
+
+    rnd = new MyRandom();
+
 }
 
 // ---------------------------------------------------------------------------------
@@ -38,21 +58,114 @@ Player::~Player()
 {
     delete spriteU;
     delete spriteD;
+	delete spriteL;
+    delete spriteR;
+	delete baseBulletImg;
+	delete piercingBulletImg;
+
+    for (Sprite* sprite : spritesLife) {
+        delete sprite;
+    }
+
+    for (Bullet* b : bulletList) {
+        scene->Remove(b, MOVING);
+
+        delete b;
+    }
+
+    bulletList.clear();
 }
 
-// ---------------------------------------------------------------------------------
-
-void Player::Stop()
+void Player::ChangeBulletType(uint bulletTypeVal)
 {
-    velX = 0;
-    velY = 0;
+	bulletType = bulletTypeVal;
+}
+
+void Player::Shoot()
+{
+	lastShootTime += Engine::frameTime;
+
+	if (shootingDirection == NO_DIRECTION || scene == nullptr || lastShootTime < shootCooldown) {
+		return; 
+	}
+
+    lastShootTime = 0;
+
+    for (int i = 0; i < bulletListSize; i++) {
+        if (bulletList[i] == nullptr) {
+            if (bulletType == PIERCING_BULLET) {
+                bulletList[i] = new PiercingBullet(piercingBulletImg, 400.0f, 10.0f, shootingDirection);
+            }
+            else {
+                bulletList[i] = new DefaultBullet(baseBulletImg, 400.0f, 10.0f, shootingDirection);
+            }
+
+            bulletList[i]->MoveTo(X(), Y());
+            scene->Add(bulletList[i], MOVING);
+
+            break;
+        }
+    }
 }
 
 // ---------------------------------------------------------------------------------
 
 void Player::OnCollision(Object * obj)
 {
+    if (obj->Type() == BUSH) {
+        MoveTo(lastPosition[0], lastPosition[1]);
+    }
 
+    if (obj->Type() == CHEST) {
+        scene->Delete(obj, STATIC);
+        GeneratePlayerBonus();
+        numChests++;
+    }
+
+    if (obj->Type() == ENEMY || obj->Type() == BULLET) {
+        numlifesPlayer--;
+
+        if (numlifesPlayer <= 0) { // GAME OVER
+            isPlayerAlive = false;  // Define a flag como false
+        }
+    }
+}
+
+uint Player::ChangePlayerShootDirection()
+{
+	uint newShootDirection = NO_DIRECTION;
+
+    if (window->KeyDown(VK_LEFT))
+    {
+        newShootDirection = SHOOT_LEFT;
+    }
+
+    if (window->KeyDown(VK_RIGHT))
+    {
+        newShootDirection = SHOOT_RIGHT;
+    }
+
+    if (window->KeyDown(VK_UP))
+    {
+        if (newShootDirection == SHOOT_LEFT)
+            newShootDirection = SHOOT_UPLEFT;
+        else if (newShootDirection == SHOOT_RIGHT)
+            newShootDirection = SHOOT_UPRIGHT;
+        else
+            newShootDirection = SHOOT_UP;
+    }
+
+    if (window->KeyDown(VK_DOWN))
+    {
+        if (newShootDirection == SHOOT_LEFT)
+            newShootDirection = SHOOT_DOWNLEFT;
+        else if (newShootDirection == SHOOT_RIGHT)
+            newShootDirection = SHOOT_DOWNRIGHT;
+        else
+            newShootDirection = SHOOT_DOWN;
+    }
+
+	return newShootDirection;
 }
 
 // ---------------------------------------------------------------------------------
@@ -65,68 +178,92 @@ void Player::PivotCollision(Object * obj)
 
 void Player::Update()
 {
-    // MOVIMENTA«√O
-    uint newShootDirection = NO_DIRECTION;
+    // Se o player n√£o estiver vivo, n√£o processa nada
+    if (!isPlayerAlive) {
+        return;
+    }
 
-    if (window->KeyDown(VK_LEFT) || window->KeyDown('A'))
+    lastPosition[0] = X();
+    lastPosition[1] = Y();
+
+    // FUN√á√ÉO PROVIS√ìRIA, SERVE PARA TESTAR OS TIPOS DE MUNI√á√ÉO
+    if (window->KeyPress('F')) {
+		bulletType = (bulletType == DEFAULT_BULLET) ? PIERCING_BULLET : DEFAULT_BULLET; 
+    }
+
+    if (window->KeyDown('A'))
     {
         Translate(-speed * gameTime, 0);
-        newShootDirection = SHOOT_LEFT;
     }
     
-    if (window->KeyDown(VK_RIGHT) || window->KeyDown('D'))
+    if (window->KeyDown('D'))
     {
         Translate(speed * gameTime, 0);
-        newShootDirection = SHOOT_RIGHT;
     }
     
-    if (window->KeyDown(VK_UP) || window->KeyDown('W'))
+    if (window->KeyDown('W'))
     {
-        currState = UP;
         Translate(0, -speed * gameTime);
-
-        if (newShootDirection == SHOOT_LEFT)
-            newShootDirection = SHOOT_UPLEFT;
-        else if (newShootDirection == SHOOT_RIGHT)
-            newShootDirection = SHOOT_UPRIGHT;
-        else
-            newShootDirection = SHOOT_UP;
     }
     
-    if (window->KeyDown(VK_DOWN) || window->KeyDown('S'))
+    if (window->KeyDown('S'))
     {
-        currState = DOWN;
         Translate(0, speed * gameTime);
-
-        if (newShootDirection == SHOOT_LEFT)
-            newShootDirection = SHOOT_DOWNLEFT;
-        else if (newShootDirection == SHOOT_RIGHT)
-            newShootDirection = SHOOT_DOWNRIGHT;
-        else
-            newShootDirection = SHOOT_DOWN;
     }
 
-    // MANTER-SE DENTRO DA TELA DO JOGO
-    if (x + (playerSize / 2) < window->CenterX() - 365.0f) {
-        Translate(speed * gameTime, 0.0f);
-    }
-    else if (x + (playerSize / 2) > window->CenterX() + playerSize + 365.0f + 2.0f) {
-        Translate(-speed * gameTime, 0.0f);
-    }
-    if (y + (playerSize / 2) < window->CenterY() - 365.0f) {
-        Translate(0.0f, speed * gameTime);
-    }
-    else if (y + (playerSize / 2) > window->CenterY() + playerSize + 365.0f + 5.0f) {
-        Translate(0.0f, -speed * gameTime);
+    for (int i = 0; i < bulletListSize; i++) {
+        if (bulletList[i] != nullptr) {
+            if (bulletList[i]->CanDelete() ||
+                bulletList[i]->X() > window->Width() || bulletList[i]->X() < 0 ||
+                bulletList[i]->Y() > window->Height() || bulletList[i]->Y() < 0) {
+                scene->Delete(bulletList[i], MOVING);
+
+                bulletList[i] = nullptr;
+            }
+        }
     }
 
-    // ATIRAR
-    if (newShootDirection != NO_DIRECTION && shootingDirection != newShootDirection) {
-        shootingDirection = newShootDirection;
+    if (boostTime > 0) {
+        boostTime -= Engine::frameTime;
+
+        if (boostTime < 0) {
+            boostTime = 0.0f;
+
+            if (boostType == SHOOT_PIERCING) {
+                bulletType = DEFAULT_BULLET;
+            }
+
+            boostType = NO_BOOST;
+        }
+    } 
+
+
+
+
+
+    if (boostType == SHOOT_FLOOD) {
+        shootingDirection = SHOOT_LEFT;
+        Shoot();
+        shootingDirection = SHOOT_RIGHT;
+        Shoot();
+        shootingDirection = SHOOT_UP;
+        Shoot();
+        shootingDirection = SHOOT_DOWN;
+        Shoot();
+        shootingDirection = SHOOT_UPLEFT;
+        Shoot();
+        shootingDirection = SHOOT_UPRIGHT;
+        Shoot();
+        shootingDirection = SHOOT_DOWNLEFT;
+        Shoot();
+        shootingDirection = SHOOT_DOWNRIGHT;
+        Shoot();
+    }
+    else {
+        shootingDirection = ChangePlayerShootDirection();
+        Shoot();
     }
 
-    // aqui seria implementada a lÛgica de atirar. a direÁ„o j· est· indicada com a vari·vel shootingDirection: 
-    // SHOOTDIRECTION { NO_DIRECTION, SHOOT_UP, SHOOT_DOWN, SHOOT_LEFT, SHOOT_RIGHT, SHOOT_UPLEFT, SHOOT_UPRIGHT, SHOOT_DOWNLEFT, SHOOT_DOWNRIGHT };
     if (window->KeyPress(VK_SPACE)) { 
         shootingDirection;
         exit(0);
@@ -136,13 +273,50 @@ void Player::Update()
 // ---------------------------------------------------------------------------------
 
 void Player::Draw()
-{ 
-    switch(currState)
-    {
-        case UP:    spriteU->Draw(x, y, Layer::UPPER); break;
-        case DOWN:  spriteD->Draw(x, y, Layer::UPPER); break;
+{
+    // S√≥ desenha se o player estiver vivo
+    if (isPlayerAlive && numlifesPlayer > 0) {
+        switch (shootingDirection)
+        {
+        case SHOOT_UP:    spriteU->Draw(x, y, Layer::UPPER); break;
+        case SHOOT_DOWN:  spriteD->Draw(x, y, Layer::UPPER); break;
+        case SHOOT_LEFT:  spriteL->Draw(x, y, Layer::UPPER); break;
+        case SHOOT_RIGHT: spriteR->Draw(x, y, Layer::UPPER); break;
+        case SHOOT_UPLEFT:  spriteU->Draw(x, y, Layer::UPPER); break;
+        case SHOOT_UPRIGHT: spriteU->Draw(x, y, Layer::UPPER); break;
+        case SHOOT_DOWNLEFT:  spriteD->Draw(x, y, Layer::UPPER); break;
+        case SHOOT_DOWNRIGHT: spriteD->Draw(x, y, Layer::UPPER); break;
         default:  spriteD->Draw(x, y, Layer::UPPER); break;
+        }
+
+        spriteLife = spritesLife[numlifesPlayer - 1];
+        spriteLife->Draw(X() - 5.0f, Y() - playerSize / 1.2f, Layer::UPPER);
     }
 }
 
 // ---------------------------------------------------------------------------------
+
+void Player::GeneratePlayerBonus() {
+    int value = rnd->randrange(0, 3);
+
+    switch (value) {
+    case 0:
+        if (numlifesPlayer == 5) // limite a um m√°ximo de 5 vidas
+            GeneratePlayerBonus();
+        else
+            numlifesPlayer++;
+        break;
+    case 1:
+        boostTime = 3.0f;
+
+        bulletType = DEFAULT_BULLET;
+        boostType = SHOOT_FLOOD;
+
+        break;
+    case 2:
+        bulletType = PIERCING_BULLET;
+        boostTime = 7.5f;
+        boostType = SHOOT_PIERCING;
+        break;
+    }
+}

@@ -27,7 +27,7 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance,
 
     // configura a janela do jogo
     engine->window->Mode(WINDOWED);
-    engine->window->Size(engine->window->Width(), engine->window->Height());
+    engine->window->Size(1024, 720);
     engine->window->Color(25, 25, 25);
     engine->window->Title("Journey of the Praisie King");
     engine->window->Icon(IDI_ICON);

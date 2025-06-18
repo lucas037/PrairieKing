@@ -23,6 +23,11 @@ enum PacManObjects
     PIVOT,
     BARRIER,
     ENEMY,
+    BUSH,
+    CHEST,
+    BULLET,
+    BOSS,
+    PLAYER_BULLET
 };
 
 // ------------------------------------------------------------------------------
