@@ -62,6 +62,11 @@ void Level1::Finalize()
 {
     delete scene;
     delete enemiesKilled;
+    delete initialPositionX;
+    delete initialPositionY;
+    delete numLifesPlayer;
+    delete enemiesDespawned;
+    delete cowboyKilled;
 }
 
 // ------------------------------------------------------------------------------
@@ -116,6 +121,23 @@ void Level1::Update()
         if (!cowboySpawned && *enemiesKilled >= numEnemiesToSpawnCowboy) {
             GenerateCowboy(playerObj);
             cowboySpawned = true;
+        }
+
+
+        if (window->KeyPress('1')) {
+            medal = "gold_medal";
+            Engine::Next<Victory>();
+            return;
+        }
+        else if (window->KeyPress('2')) {
+            medal = "silver_medal";
+            Engine::Next<Victory>();
+            return;
+        }
+        else if (window->KeyPress('3')) {
+            medal = "bronze_medal";
+            Engine::Next<Victory>();
+            return;
         }
 
         if (*cowboyKilled && *enemiesDespawned >= enemiesSpawned) {
