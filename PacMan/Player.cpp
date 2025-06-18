@@ -250,8 +250,6 @@ void Player::Update()
         Shoot();
         shootingDirection = SHOOT_DOWN;
         Shoot();
-    }
-    else if (boostType == SHOOT_FLOOD_DIAGONAL) {
         shootingDirection = SHOOT_UPLEFT;
         Shoot();
         shootingDirection = SHOOT_UPRIGHT;
@@ -311,10 +309,8 @@ void Player::GeneratePlayerBonus() {
     case 1:
         boostTime = 3.0f;
 
-        if (rnd->randrange(0, 2))
-            boostType = SHOOT_FLOOD;
-        else
-            boostType = SHOOT_FLOOD_DIAGONAL;
+        bulletType = DEFAULT_BULLET;
+        boostType = SHOOT_FLOOD;
 
         break;
     case 2:
