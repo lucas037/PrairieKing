@@ -175,7 +175,7 @@ void Level1::GenerateEnemies(int numEnemies) {
 
     MyRandom rnd;
 
-    numEnemies = rnd.randrange(1, 6); // gera entre 1 e 5 inimigos (média de 3)
+    numEnemies = rnd.randrange(1, 4); // gera entre 1 e 5 inimigos (média de 3)
 
     enemiesSpawned += numEnemies; // armazena numero de inimigos spawnados
 

@@ -52,7 +52,6 @@ The project is organized into the following **main classes**:
 * **`GameOver`**: Screen displayed when the player loses.
 * **`Home`**: Game's initial screen.
 * **`Level1`**: Implements the logic and elements of the first game level.
-* **`Level2`**: Implements the logic and elements of the second game level (currently with limited functionality).
 * **`Object`**: Base class for all game objects.
 * **`Player`**: Implements the logic and controls for the player character.
 * **`Pivot`**: Reference points in the environment for certain object movements.
@@ -123,7 +122,6 @@ O projeto é organizado nas seguintes **classes principais**:
 * **`GameOver`**: Tela exibida quando o jogador perde.
 * **`Home`**: Tela inicial do jogo.
 * **`Level1`**: Implementa a lógica e os elementos do primeiro nível do jogo.
-* **`Level2`**: Implementa a lógica e os elementos do segundo nível do jogo (atualmente com funcionalidades limitadas).
 * **`Object`**: Classe base para todos os objetos do jogo.
 * **`Player`**: Implementa a lógica e os controles do personagem do jogador.
 * **`Pivot`**: Pontos de referência no cenário para movimentação de certos objetos.
