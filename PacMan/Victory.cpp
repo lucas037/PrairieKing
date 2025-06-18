@@ -4,6 +4,7 @@
 
 void Victory::Init() {
     backg = new Sprite("Resources/winner_screen.png");
+
 }
 
 void Victory::Finalize() {

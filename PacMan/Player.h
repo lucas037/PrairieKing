@@ -56,6 +56,7 @@ private:
     float lastPosition[2] = { 0.0f, 0.0f };
     int bulletListSize = 0;
     float lastShootTime = 0;
+    int numChests;
 
     MyRandom* rnd;
 
@@ -91,6 +92,8 @@ public:
     bool IsAlive() const { return isPlayerAlive; }
     int GetLifes() const { return numlifesPlayer; }
     void SetAlive(bool alive) { isPlayerAlive = alive; }
+
+    int getScore() { return (numChests * 10) + (numlifesPlayer * 20); }
 
 };
 

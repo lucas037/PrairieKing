@@ -115,6 +115,7 @@ void Level1::Update()
         }
 
         if (*cowboyKilled && *enemiesDespawned == enemiesSpawned) {
+            
             Engine::Next<Victory>();
             return;
         }

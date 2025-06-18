@@ -119,6 +119,7 @@ void Player::OnCollision(Object * obj)
     if (obj->Type() == CHEST) {
         scene->Delete(obj, STATIC);
         GeneratePlayerBonus();
+        numChests++;
     }
 
     if (obj->Type() == ENEMY || obj->Type() == BULLET) {
