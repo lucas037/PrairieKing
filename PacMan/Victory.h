@@ -10,6 +10,7 @@ class Victory : public Game
 {
 private:
     Sprite* backg = nullptr;     // plano de fundo
+    Sprite* medal = nullptr;     // medalha
     int score = 0;
 
 public:

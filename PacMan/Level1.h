@@ -56,6 +56,8 @@ public:
     void Finalize();                // finaliza jogo
     void GenerateEnemies(int numEnemies);
     void GenerateCowboy(Player* playerObj);
+
+    static string medal;
 };
 
 // -----------------------------------------------------------------------------
