@@ -118,6 +118,23 @@ void Level1::Update()
             cowboySpawned = true;
         }
 
+
+        if (window->KeyPress('1')) {
+            medal = "gold_medal";
+            Engine::Next<Victory>();
+            return;
+        }
+        else if (window->KeyPress('2')) {
+            medal = "silver_medal";
+            Engine::Next<Victory>();
+            return;
+        }
+        else if (window->KeyPress('3')) {
+            medal = "bronze_medal";
+            Engine::Next<Victory>();
+            return;
+        }
+
         if (*cowboyKilled && *enemiesDespawned >= enemiesSpawned) {
             if (*enemiesDespawned == *enemiesKilled)
                 medal = "gold_medal";
