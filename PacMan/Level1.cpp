@@ -62,6 +62,11 @@ void Level1::Finalize()
 {
     delete scene;
     delete enemiesKilled;
+    delete initialPositionX;
+    delete initialPositionY;
+    delete numLifesPlayer;
+    delete enemiesDespawned;
+    delete cowboyKilled;
 }
 
 // ------------------------------------------------------------------------------
